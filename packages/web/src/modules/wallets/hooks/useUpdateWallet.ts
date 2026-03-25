@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { ref, watch, type Ref } from 'vue'
 import * as z from 'zod'
 import { WalletUpdateSchema, type TWalletUpdate } from '../schema'
 import { useModal } from '@/utils/useModal'
@@ -15,29 +15,24 @@ export const useUpdateWalletForm = ({
   wallet,
   walletId,
 }: {
-  wallet: TWalletUpdate
+  wallet: Ref<TWalletUpdate>
   walletId: string
 }) => {
   const queryClient = useQueryClient()
   const { close } = useUpdateWallet()
 
   const formErrors = ref<z.core.$ZodFlattenedError<TWalletUpdate> | null>(null)
-  const form = ref<TWalletUpdate>({
-    name: wallet.name,
-    balance: wallet.balance,
-    color: wallet.color,
-    is_archived: wallet.is_archived,
-  })
+  const form = ref<TWalletUpdate>({ ...wallet.value })
   const serverError = ref<string | null | undefined>(null)
 
+  watch(wallet, (val) => {
+    form.value = { ...val }
+  })
+
   const reset = () => {
-    form.value = {
-      name: wallet.name,
-      balance: wallet.balance,
-      color: wallet.color,
-      is_archived: wallet.is_archived,
-    }
+    form.value = { ...wallet.value }
     formErrors.value = null
+    serverError.value = null
   }
 
   const { mutate, isPending } = useMutation({

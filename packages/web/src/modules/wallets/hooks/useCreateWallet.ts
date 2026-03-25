@@ -19,12 +19,11 @@ export const useCreateWalletForm = () => {
     name: '',
     balance: 0,
     color: '#94ff76',
-    is_archived: false,
   })
   const serverError = ref<string | null | undefined>(null)
 
   const reset = () => {
-    form.value = { name: '', balance: 0, color: '#94ff76', is_archived: false }
+    form.value = { name: '', balance: 0, color: '#94ff76' }
     formErrors.value = null
   }
 

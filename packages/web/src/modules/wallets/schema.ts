@@ -1,21 +1,20 @@
 import { z } from 'zod'
 
 export const WalletPlainSchema = z.object({
-  id: z.string().optional(),
-  user_id: z.string().optional(),
+  id: z.string(),
+  user_id: z.string().nullish(),
   balance: z.number(),
   name: z.string(),
   color: z.string(),
   is_archived: z.boolean(),
-  created_at: z.coerce.date().optional(),
-  updated_at: z.coerce.date().optional(),
+  created_at: z.coerce.date(),
+  updated_at: z.coerce.date(),
 })
 
 export const WalletCreateSchema = z.object({
-  balance: z.number().optional().default(0),
+  balance: z.number().default(0),
   name: z.string().min(1, 'Name is required'),
-  color: z.string().optional().default('#94ff76'),
-  is_archived: z.boolean().default(false).optional(),
+  color: z.string().default('#94ff76'),
 })
 
 export const WalletUpdateSchema = z.object({

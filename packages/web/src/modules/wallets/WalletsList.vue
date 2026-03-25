@@ -28,14 +28,15 @@
     <StateNull v-else-if="!data?.items?.length" />
 
     <!-- List -->
-    <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 flex-1">
+    <div v-else class="grid grid-rows-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 flex-1">
       <RouterLink
         v-for="item in data.items"
         :key="item.id"
         :to="`/app/wallets/${item.id}`"
-        class="flex items-center"
+        class="flex"
+        :class="data.items.length > 0 ? 'items-start' : 'items-center'"
       >
-        <WalletCard :key="item.id" :wallet="item" />
+        <WalletCard :wallet="item" />
       </RouterLink>
     </div>
 

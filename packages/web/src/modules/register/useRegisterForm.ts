@@ -31,7 +31,7 @@ export const useRegisterForm = () => {
     register(form.value, {
       onSuccess: () => {
         const redirect = route.query.redirect as string | undefined
-        router.push(redirect ?? '/dashboard')
+        router.push(redirect ?? '/login')
       },
     })
   }

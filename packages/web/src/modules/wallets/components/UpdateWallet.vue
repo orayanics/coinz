@@ -80,14 +80,22 @@ const props = defineProps<{
   walletId: string
 }>()
 
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useUpdateWallet, useUpdateWalletForm } from '../hooks/useUpdateWallet'
 import type { TWalletUpdate } from '../schema'
 
 const { isOpen, close } = useUpdateWallet()
 const dialogRef = ref<HTMLDialogElement>()
+
+const walletAsUpdate = computed<TWalletUpdate>(() => ({
+  name: props.wallet.name,
+  balance: props.wallet.balance,
+  color: props.wallet.color,
+  is_archived: props.wallet.is_archived,
+}))
+
 const { form, formErrors, serverError, isPending, onFormSubmit, reset } = useUpdateWalletForm({
-  wallet: props.wallet,
+  wallet: walletAsUpdate,
   walletId: props.walletId,
 })
 

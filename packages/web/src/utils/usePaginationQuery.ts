@@ -22,7 +22,7 @@ export function usePaginatedQuery({ limit = 10 }: { limit?: number }) {
   })
 
   const filter = computed({
-    get: () => (route.query.filter as 'EXPENSE' | 'INCOME') || undefined,
+    get: () => (route.query.filter as 'EXPENSE' | 'INCOME' | undefined) || undefined,
     set: (val) => router.replace({ query: { ...route.query, filter: val || undefined } }),
   })
 

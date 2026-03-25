@@ -24,17 +24,17 @@
 
       <div class="flex flex-col gap-4 col-span-1">
         <!-- Search, filter, sort -->
-        <div class="grid md:grid-cols-1 lg:grid-cols-6 gap-2 items-center">
+        <div class="grid md:grid-cols-1 lg:grid-cols-12 gap-2 items-center">
           <label class="input w-full col-span-6 lg:col-span-4 flex items-center gap-2">
             <PhMagnifyingGlass />
             <input v-model="searchInput" type="text" placeholder="Search wallets..." />
           </label>
 
-          <div class="flex gap-2 col-span-6 lg:col-span-1">
+          <div class="flex gap-2 col-span-6 lg:col-span-4">
             <button
               type="button"
               class="btn flex-1"
-              :class="filter === 'EXPENSE' ? 'btn-error' : 'btn-ghost'"
+              :class="filter === 'EXPENSE' ? 'btn-error' : 'btn-soft'"
               @click="filter = filter === 'EXPENSE' ? undefined : 'EXPENSE'"
             >
               Expense
@@ -42,19 +42,19 @@
             <button
               type="button"
               class="btn flex-1"
-              :class="filter === 'INCOME' ? 'btn-success' : 'btn-ghost'"
+              :class="filter === 'INCOME' ? 'btn-success' : 'btn-soft'"
               @click="filter = filter === 'INCOME' ? undefined : 'INCOME'"
             >
               Income
             </button>
           </div>
 
-          <select v-model="sortBy" class="select w-full col-span-6 lg:col-span-1">
+          <select v-model="sortBy" class="select w-full col-span-6 lg:col-span-2">
             <option value="created_at">Created</option>
             <option value="updated_at">Updated</option>
           </select>
 
-          <select v-model="sort" class="select w-full col-span-6 lg:col-span-1">
+          <select v-model="sort" class="select w-full col-span-6 lg:col-span-2">
             <option value="desc">Newest</option>
             <option value="asc">Oldest</option>
           </select>

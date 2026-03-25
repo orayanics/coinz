@@ -15,7 +15,7 @@ import {
   PaginationQuery,
   ParamsQuery,
 } from "@/models/response";
-import { WalletCreate, WalletUpdate } from "./model";
+import { WalletCreate, WalletUpdate, WalletPlain } from "./model";
 
 export const walletsModule = new Elysia({
   prefix: "/wallets",
@@ -33,7 +33,7 @@ export const walletsModule = new Elysia({
       auth: true,
       body: WalletCreate,
       response: {
-        201: ApiSuccess(WalletCreate),
+        201: ApiSuccess(WalletPlain),
         400: ApiError,
       },
       detail: {
@@ -56,7 +56,7 @@ export const walletsModule = new Elysia({
       }),
       body: WalletUpdate,
       response: {
-        200: ApiSuccess(WalletUpdate),
+        200: ApiSuccess(WalletPlain),
         400: ApiError,
       },
       detail: {
