@@ -1,10 +1,5 @@
 import { z } from 'zod'
 
-export enum ITEM_TYPE {
-  INCOME = 'INCOME',
-  EXPENSE = 'EXPENSE',
-}
-
 export const WalletItemPlainSchema = z.object({
   id: z.string().optional(),
   wallet_id: z.string().optional(),

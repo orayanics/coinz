@@ -76,6 +76,7 @@
                 <th>Note</th>
                 <th>Amount</th>
                 <th>Date</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody v-for="item in wallet_items?.items" :key="item.id">
@@ -91,8 +92,24 @@
                 <td class="text-base-content/60">
                   {{ item.date ? formatDate(item.date) : 'N/A' }}
                 </td>
+                <td class="flex gap-2">
+                  <button class="btn btn-square" @click="openUpdateModal(item)">
+                    <component :is="PhPencil" />
+                  </button>
+                  <button class="btn btn-square" @click="openDeleteModal(item)">
+                    <component :is="PhTrash" />
+                  </button>
+                </td>
               </tr>
             </tbody>
+
+            <!-- Wallet item modals -->
+            <DeleteWalletItem :wallet-id="deleteItem?.wallet_id" :item-id="deleteItem?.id" />
+            <UpdateWalletItem
+              :item="updateItemModalValue"
+              :wallet-id="updateItem?.wallet_id"
+              :item-id="updateItem?.id"
+            />
           </table>
         </div>
 
@@ -109,7 +126,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useQuery } from '@tanstack/vue-query'
 import { walletQueryOptions } from '@/api/useWallets'
@@ -118,17 +135,44 @@ import { usePaginatedQuery } from '@/utils/usePaginationQuery'
 import WalletCard from '@/components/Wallet/WalletCard.vue'
 import PaginationActions from '@/components/Pagination/PaginationActions.vue'
 import { StateError, StateLoading, StateNull } from '@/components/States'
-import { PhMagnifyingGlass, PhPlus, PhMinus } from '@phosphor-icons/vue'
+import { PhMagnifyingGlass, PhPlus, PhMinus, PhPencil, PhTrash } from '@phosphor-icons/vue'
 import DeleteWallet from './components/DeleteWallet.vue'
 import UpdateWallet from './components/UpdateWallet.vue'
 import CreateWalletItem from '../wallet_item/components/CreateWalletItem.vue'
+import UpdateWalletItem from '../wallet_item/components/UpdateWalletItem.vue'
+import DeleteWalletItem from '../wallet_item/components/DeleteWalletItem.vue'
 import { useDeleteWallet } from './hooks/useDeleteWallet'
 import { useUpdateWallet } from './hooks/useUpdateWallet'
 import { useCreateWalletItem } from '../wallet_item/hooks/useCreateWalletItem'
+import { useDeleteWalletItem } from '../wallet_item/hooks/useDeleteWalletItem'
+import { useUpdateWalletItem } from '../wallet_item/hooks/useUpdateWalletItem'
 import { formatDate } from '@/utils/useDate'
+import type { TWalletItem } from '../wallet_item/schema'
 const { open: openDeleteWallet } = useDeleteWallet()
 const { open: openUpdateWallet } = useUpdateWallet()
 const { open: openCreateItem } = useCreateWalletItem()
+const { open: openDeleteItem } = useDeleteWalletItem()
+const { open: openUpdateItem } = useUpdateWalletItem()
+
+const deleteItem = ref<TWalletItem>()
+const openDeleteModal = (item: TWalletItem) => {
+  deleteItem.value = item
+  openDeleteItem()
+}
+
+const updateItem = ref<TWalletItem>()
+const openUpdateModal = (item: TWalletItem) => {
+  updateItem.value = item
+  openUpdateItem()
+}
+
+const updateItemModalValue = computed(() => {
+  if (!updateItem.value) return undefined
+  return {
+    ...updateItem.value,
+    date: updateItem.value.date ?? undefined,
+  }
+})
 
 const route = useRoute()
 if (!route.params.walletId) {
@@ -145,7 +189,7 @@ const {
   data: wallet_items,
   isLoading: isItemsLoading,
   isError: isItemsError,
-} = useQuery(computed(() => walletItemsQueryOptions(params.value, walletId.value)))
+} = useQuery(walletItemsQueryOptions(params.value, walletId.value))
 </script>
 
 <style scoped></style>

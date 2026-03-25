@@ -56,7 +56,7 @@ export const walletItemsModule = new Elysia({
       );
 
       if (!result.success) return status(400, result);
-      return status(200, ok(undefined));
+      return status(200, ok(result.data));
     },
     {
       auth: true,
