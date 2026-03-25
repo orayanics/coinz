@@ -15,8 +15,17 @@ export const PaginationQuery = t.Object({
   limit: t.Optional(t.Numeric({ default: 10, minimum: 1, maximum: 100 })),
 });
 
+const WALLET_ITEM_FILTER = ["EXPENSE", "INCOME"] as const;
+
+export const WalletItemFilterQuery = t.Object({
+  filter: t.Optional(
+    t.Union(WALLET_ITEM_FILTER.map((v) => t.Literal(v)) as any),
+  ),
+});
+
 export type TParamsQuery = typeof ParamsQuery.static;
 export type TPaginationQuery = typeof PaginationQuery.static;
+export type TWalletItemFilterQuery = typeof WalletItemFilterQuery.static;
 
 export const Paginated = <T extends TSchema>(schema: T) =>
   t.Object({

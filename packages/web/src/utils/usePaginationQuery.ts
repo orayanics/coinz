@@ -21,6 +21,11 @@ export function usePaginatedQuery({ limit = 10 }: { limit?: number }) {
     set: (val) => router.replace({ query: { ...route.query, sortBy: val } }),
   })
 
+  const filter = computed({
+    get: () => (route.query.filter as 'EXPENSE' | 'INCOME') || undefined,
+    set: (val) => router.replace({ query: { ...route.query, filter: val || undefined } }),
+  })
+
   const [searchInput, searchDebounced] = useDebouncedRef((route.query.search as string) || '', 400)
 
   // Sync debounced search back to URL
@@ -29,8 +34,8 @@ export function usePaginatedQuery({ limit = 10 }: { limit?: number }) {
   })
 
   // Reset page on filter change
-  watch([sort, sortBy], () => {
-    router.replace({ query: { ...route.query, page: 1 } })
+  watch([sort, sortBy, filter], () => {
+    router.replace({ query: { ...route.query, page: undefined } })
   })
 
   const params = computed(() => ({
@@ -39,7 +44,8 @@ export function usePaginatedQuery({ limit = 10 }: { limit?: number }) {
     search: searchDebounced.value || undefined,
     sort: sort.value,
     sortBy: sortBy.value,
+    filter: filter.value,
   }))
 
-  return { page, sort, sortBy, searchInput, params }
+  return { page, sort, sortBy, searchInput, params, filter }
 }

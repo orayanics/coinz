@@ -13,6 +13,7 @@ import {
   ok,
   PaginationQuery,
   ParamsQuery,
+  WalletItemFilterQuery,
 } from "@/models/response";
 import { WalletItemCreate, WalletItemUpdate } from "./model";
 
@@ -106,7 +107,7 @@ export const walletItemsModule = new Elysia({
       params: t.Object({
         wallet_id: t.String(),
       }),
-      query: t.Composite([PaginationQuery, ParamsQuery]),
+      query: t.Composite([PaginationQuery, ParamsQuery, WalletItemFilterQuery]),
       response: {
         200: ApiSuccess(),
         400: ApiError,

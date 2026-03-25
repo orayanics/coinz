@@ -1,7 +1,12 @@
 import { db } from "@/lib/prisma";
 import type { TWalletItemCreate, TWalletItemUpdate } from "./model";
 import { Decimal } from "@prisma/client/runtime/client";
-import { paginate, TPaginationQuery, TParamsQuery } from "@/models/response";
+import {
+  paginate,
+  TPaginationQuery,
+  TParamsQuery,
+  TWalletItemFilterQuery,
+} from "@/models/response";
 import { checkWalletAccess, checkWalletItem } from "@/lib/wallet";
 
 export const createWalletItem = async (
@@ -82,7 +87,7 @@ export const deleteWalletItem = async (
 export const getWalletItems = async (
   user_id: string,
   wallet_id: string,
-  params: TParamsQuery & TPaginationQuery,
+  params: TParamsQuery & TPaginationQuery & TWalletItemFilterQuery,
 ) => {
   await checkWalletAccess(wallet_id, user_id);
 
@@ -90,6 +95,7 @@ export const getWalletItems = async (
     page = 1,
     limit = 10,
     search,
+    filter,
     sort = "desc",
     sortBy = "created_at",
   } = params;
@@ -97,7 +103,8 @@ export const getWalletItems = async (
 
   const where = {
     wallet_id,
-    ...(search && { OR: [{ note: { contains: search } }] }),
+    ...(search ? { note: { contains: search } } : {}),
+    ...(filter ? { type: filter } : {}),
   };
 
   const [items, total] = await Promise.all([

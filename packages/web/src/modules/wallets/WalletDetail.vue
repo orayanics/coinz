@@ -15,7 +15,7 @@
       <!-- Wallet -->
       <div class="col-span-1">
         <WalletCard :wallet="data" />
-        <div class="flex gap-2 mt-4">
+        <div class="flex justify-center gap-2 mt-4">
           <button class="btn btn-neutral" @click="openCreateItem">Add Item</button>
           <button class="btn btn-neutral" @click="openUpdateWallet">Edit Wallet</button>
           <button class="btn btn-error" @click="openDeleteWallet">Delete Wallet</button>
@@ -29,6 +29,25 @@
             <PhMagnifyingGlass />
             <input v-model="searchInput" type="text" placeholder="Search wallets..." />
           </label>
+
+          <div class="flex gap-2 col-span-6 lg:col-span-1">
+            <button
+              type="button"
+              class="btn flex-1"
+              :class="filter === 'EXPENSE' ? 'btn-error' : 'btn-ghost'"
+              @click="filter = filter === 'EXPENSE' ? undefined : 'EXPENSE'"
+            >
+              Expense
+            </button>
+            <button
+              type="button"
+              class="btn flex-1"
+              :class="filter === 'INCOME' ? 'btn-success' : 'btn-ghost'"
+              @click="filter = filter === 'INCOME' ? undefined : 'INCOME'"
+            >
+              Income
+            </button>
+          </div>
 
           <select v-model="sortBy" class="select w-full col-span-6 lg:col-span-1">
             <option value="created_at">Created</option>
@@ -121,14 +140,12 @@ const walletId = computed(() => route.params.walletId as string)
 const { data, isLoading, isError } = useQuery(computed(() => walletQueryOptions(walletId.value)))
 
 // Wallet Items
-const { page, sort, sortBy, searchInput, params } = usePaginatedQuery({ limit: 10 })
+const { page, sort, sortBy, searchInput, filter, params } = usePaginatedQuery({ limit: 10 })
 const {
   data: wallet_items,
   isLoading: isItemsLoading,
   isError: isItemsError,
 } = useQuery(computed(() => walletItemsQueryOptions(params.value, walletId.value)))
-
-console.log(data.value)
 </script>
 
 <style scoped></style>

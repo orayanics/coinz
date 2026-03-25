@@ -37,6 +37,7 @@ export const WalletItemListQuerySchema = z.object({
   search: z.string().optional(),
   sort: z.enum(['asc', 'desc']).optional(),
   sortBy: z.enum(['created_at', 'updated_at']).optional(),
+  filter: z.enum(['EXPENSE', 'INCOME']).optional(),
 })
 
 export type TWalletItem = z.infer<typeof WalletItemPlainSchema>
