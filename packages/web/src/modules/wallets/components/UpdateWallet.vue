@@ -23,12 +23,18 @@
         </fieldset>
 
         <fieldset class="fieldset">
-          <label class="label">Balance</label>
+          <label class="label"
+            >Balance
+            <span class="text-xs text-gray-500"
+              >An adjustment item will be created upon update</span
+            >
+          </label>
           <input
             v-model.number="form.balance"
             type="number"
             step="0.01"
             placeholder="0.00"
+            min="0"
             class="input w-full"
             :class="{ 'input-error': formErrors?.fieldErrors.balance }"
           />

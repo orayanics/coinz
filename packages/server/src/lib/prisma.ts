@@ -18,7 +18,7 @@ export const db = new PrismaClient({
       balance: {
         needs: { balance: true },
         compute(wallet) {
-          return wallet.balance.toNumber();
+          return wallet.balance?.toNumber();
         },
       },
     },

@@ -14,7 +14,6 @@
 
       <!-- Wallet -->
       <div class="col-span-1">
-        <!-- TODO: Handle edit wallet for updating balance, it resets to the updated balance without computing the items already in the wallet -->
         <WalletCard :wallet="data" />
         <div class="flex gap-2 mt-4">
           <button class="btn btn-neutral" @click="openCreateItem">Add Item</button>

@@ -6,6 +6,7 @@ import { useMutation } from '@tanstack/vue-query'
 import { updateWalletMutationOptions, walletKeys } from '@/api/useWallets'
 import { useQueryClient } from '@tanstack/vue-query'
 import { isAxiosError } from 'axios'
+import { walletItemKeys } from '@/api/useWalletItem'
 
 const walletUpdateModal = useModal()
 export const useUpdateWallet = () => walletUpdateModal
@@ -43,6 +44,7 @@ export const useUpdateWalletForm = ({
     ...updateWalletMutationOptions(),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: walletKeys.detail(walletId) })
+      await queryClient.invalidateQueries({ queryKey: walletItemKeys.lists() })
       close()
     },
     onError: (error) => {

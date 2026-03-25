@@ -28,11 +28,47 @@ export const updateWallet = async (
   wallet_id: string,
   user_id: string,
 ) => {
-  await checkWalletAccess(wallet_id, user_id);
+  const wallet = await checkWalletAccess(wallet_id, user_id);
+
+  // Case: wallet balance is updated by user. It should recompute with the items already in
+  // the wallet. It should not reset to the updated input of the user.
+
+  const { balance: targetBalance, ...rest } = data;
+
+  // Update non-balance fields only
+  const updated = await db.wallet.update({
+    where: { id: wallet_id },
+    data: rest,
+  });
+
+  if (targetBalance === undefined || targetBalance === wallet.balance) {
+    return updated;
+  }
+
+  const delta = targetBalance - wallet.balance!;
+
+  // Create adjustment item (positive and negative deltas)
+  await db.walletItem.create({
+    data: {
+      wallet_id,
+      type: delta > 0 ? "INCOME" : "EXPENSE",
+      amount: Math.abs(delta),
+      note: "Balance adjustment",
+      date: new Date(),
+    },
+  });
+
+  // Recompute balance from all items
+  const items = await db.walletItem.findMany({ where: { wallet_id } });
+  const recomputed = items.reduce(
+    (acc, item) =>
+      item.type === "INCOME" ? acc + item.amount : acc - item.amount,
+    0,
+  );
 
   return await db.wallet.update({
     where: { id: wallet_id },
-    data,
+    data: { balance: recomputed },
   });
 };
 
