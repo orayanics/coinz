@@ -1,0 +1,25 @@
+import { t } from "elysia";
+
+export const UserPlain = t.Object({
+  id: t.String(),
+  name: t.String(),
+  email: t.String({ format: "email" }),
+  password: t.String({ minLength: 8 }),
+  created_at: t.Date(),
+  updated_at: t.Date(),
+});
+
+export const UserRegister = t.Object({
+  ...t.Pick(UserPlain, ["name", "email"]).properties,
+  password: t.String({
+    minLength: 8,
+    pattern: "^(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).+$",
+    error:
+      "Password must be at least 8 characters with 1 uppercase, 1 number, and 1 special character.",
+  }),
+});
+export const UserLogin = t.Object({
+  ...t.Pick(UserPlain, ["email", "password"]).properties,
+});
+export type TUserRegister = typeof UserRegister.static;
+export type TUserLogin = typeof UserLogin.static;
