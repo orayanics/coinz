@@ -1,0 +1,12 @@
+{
+  "name": "coinz",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "bun run --parallel --filter coinz-* dev",
+    "dev:web": "bun run --filter coinz-web dev",
+    "dev:server": "bun run --filter coinz-server dev"
+  }
+}
