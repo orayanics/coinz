@@ -16,8 +16,8 @@
       <div class="col-span-1">
         <WalletCard :wallet="data" />
         <div class="flex justify-center gap-2 mt-4">
-          <button class="btn btn-neutral" @click="openCreateItem">Add Item</button>
-          <button class="btn btn-neutral" @click="openUpdateWallet">Edit Wallet</button>
+          <button class="btn" @click="openCreateItem">Add Item</button>
+          <button class="btn" @click="openUpdateWallet">Edit Wallet</button>
           <button class="btn btn-error" @click="openDeleteWallet">Delete Wallet</button>
         </div>
       </div>

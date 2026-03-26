@@ -12,7 +12,7 @@
             <button
               type="button"
               class="btn flex-1"
-              :class="form.type === 'EXPENSE' ? 'btn-error' : 'btn-ghost'"
+              :class="form.type === 'EXPENSE' ? 'btn-error' : 'btn-soft btn-ghost'"
               @click="form.type = 'EXPENSE'"
             >
               Expense
@@ -20,7 +20,7 @@
             <button
               type="button"
               class="btn flex-1"
-              :class="form.type === 'INCOME' ? 'btn-success' : 'btn-ghost'"
+              :class="form.type === 'INCOME' ? 'btn-success' : 'btn-soft btn-ghost'"
               @click="form.type = 'INCOME'"
             >
               Income
@@ -71,7 +71,7 @@
 
         <div class="modal-action">
           <button type="button" class="btn" @click="close">Cancel</button>
-          <button type="submit" class="btn btn-accent" :disabled="isPending">Add</button>
+          <button type="submit" class="btn btn-success" :disabled="isPending">Add</button>
         </div>
       </form>
     </div>

@@ -6,50 +6,50 @@
     >
       <div class="flex flex-col items-center gap-4">
         <RouterLink to="/app/dashboard">
-          <PhCoins class="btn btn-square p-1 hover:fill-accent" />
+          <PhCoins class="w-10 h-10 p-2 hover:fill-success" />
         </RouterLink>
         <div class="flex flex-col gap-4">
           <RouterLink
             to="/app/wallets"
-            class="tooltip tooltip-right tooltip-accent"
+            class="tooltip tooltip-right tooltip-success"
             data-tip="Wallets"
           >
-            <PhWallet class="btn btn-square p-2" />
+            <PhWallet class="w-10 h-10 p-2" />
           </RouterLink>
           <RouterLink
             to="/app/settings"
-            class="tooltip tooltip-right tooltip-accent"
+            class="tooltip tooltip-right tooltip-success"
             data-tip="Profile"
           >
-            <PhGear class="btn btn-square p-2" />
+            <PhGear class="w-10 h-10 p-2" />
           </RouterLink>
         </div>
       </div>
 
       <button
-        class="tooltip tooltip-right tooltip-accent"
+        class="tooltip tooltip-right tooltip-success"
         data-tip="Logout"
         type="button"
         @click="logout()"
         :disabled="isPending"
       >
-        <PhSignOut class="btn btn-accent btn-square p-2" />
+        <PhSignOut class="btn btn-success btn-square p-2" />
       </button>
     </aside>
 
     <div class="flex flex-col flex-1 min-w-0">
-      <header class="navbar bg-base-200 border-b border-neutral-600">
+      <header class="navbar bg-base-100 border-b border-neutral-600">
         <div class="flex justify-between gap-2 mx-2 w-full">
           <div class="flex items-center gap-2">
-            <button type="button" class="btn btn-square" @click="toggleSidebar">
-              <PhSidebarSimple :size="24" />
+            <button type="button" class="cursor-pointer" @click="toggleSidebar">
+              <PhSidebarSimple :size="24" class="hover:fill-success mx-auto" />
             </button>
             <p class="font-medium capitalize">{{ routeName }}</p>
           </div>
         </div>
       </header>
 
-      <div class="flex flex-1 bg-base-200 overflow-hidden">
+      <div class="flex flex-1 bg-base-100 overflow-hidden">
         <div class="drawer">
           <input id="priv-drawer" type="checkbox" class="drawer-toggle" v-model="drawerOpen" />
           <div class="drawer-content h-full overflow-y-auto p-4 [scrollbar-width:thin]">
@@ -62,7 +62,11 @@
           <div class="drawer-side z-20">
             <label for="priv-drawer" aria-label="close sidebar" class="drawer-overlay" />
             <ul class="menu p-6 bg-base-100 min-h-full w-full flex flex-col gap-6">
-              <button type="button" class="cursor-pointer hover:text-accent" @click="toggleSidebar">
+              <button
+                type="button"
+                class="cursor-pointer hover:text-success"
+                @click="toggleSidebar"
+              >
                 <PhX :size="24" />
               </button>
               <PrivateSidebar @navigate="drawerOpen = false" />

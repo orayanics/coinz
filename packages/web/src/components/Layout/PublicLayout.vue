@@ -5,12 +5,12 @@
     >
       <div>
         <RouterLink to="/">
-          <PhCoins size="32" />
+          <PhCoins size="32" class="hover:fill-success" />
         </RouterLink>
       </div>
       <div class="flex gap-4">
-        <RouterLink to="/register" active-class="text-accent"> Register </RouterLink>
-        <RouterLink to="/login" active-class="text-accent"> Login </RouterLink>
+        <RouterLink to="/register" active-class="text-success"> Register </RouterLink>
+        <RouterLink to="/login" active-class="text-success"> Login </RouterLink>
       </div>
     </header>
 

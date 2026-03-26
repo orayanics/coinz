@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import WalletCardChip from './WalletCardChip.vue'
 import WalletCardFooter from './WalletCardFooter.vue'
 import { type TWallet } from '@/modules/wallets/schema'
+import { PhEyeSlash } from '@phosphor-icons/vue'
 
 const props = defineProps<{ wallet: TWallet }>()
 
@@ -16,10 +17,10 @@ function hexToRgb(hex: string) {
 }
 
 const rgb = computed(() => hexToRgb(props.wallet.color))
-const blobColor = computed(() => `rgba(${rgb.value.r}, ${rgb.value.g}, ${rgb.value.b}, 0.95)`)
-const blobColorAlt = computed(() => `rgba(${rgb.value.r}, ${rgb.value.g}, ${rgb.value.b}, 0.35)`)
+const blobColor = computed(() => `rgba(${rgb.value.r}, ${rgb.value.g}, ${rgb.value.b}, 1)`)
+const blobColorAlt = computed(() => `rgba(${rgb.value.r}, ${rgb.value.g}, ${rgb.value.b}, 0.45)`)
 const glowShadow = computed(
-  () => `0 4px 78px rgba(${rgb.value.r}, ${rgb.value.g}, ${rgb.value.b}, 0.12)`,
+  () => `0 4px 78px rgba(${rgb.value.r}, ${rgb.value.g}, ${rgb.value.b}, 0.1)`,
 )
 
 function seededRand(seed: number, index: number): number {
@@ -63,13 +64,14 @@ const blobSecondaryStyle = computed(() => ({
 </script>
 
 <template>
-  <div class="wallet-card bg-base-100 overflow-hidden" :style="{ '--glow': glowShadow }">
+  <div class="wallet-card bg-base-300 overflow-hidden" :style="{ '--glow': glowShadow }">
     <div class="blob" :style="blobMainStyle" />
     <div class="blob" :style="blobSecondaryStyle" />
 
     <div class="glass-surface">
-      <div class="flex items-start justify-between">
+      <div class="flex items-center justify-between">
         <WalletCardChip />
+        <PhEyeSlash v-if="wallet.is_archived" size="32" class="text-neutral-400" />
       </div>
 
       <div class="flex-1" />

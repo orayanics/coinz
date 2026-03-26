@@ -36,6 +36,7 @@ export const walletsQueryOptions = (
     },
     placeholderData: (prev) => prev,
     retry: false,
+    staleTime: 0,
   })
 
 export const walletQueryOptions = (id: string) =>

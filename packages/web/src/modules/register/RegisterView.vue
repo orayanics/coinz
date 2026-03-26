@@ -46,7 +46,7 @@
           </span>
         </fieldset>
 
-        <button class="btn btn-accent" type="submit" :disabled="isPending">Register</button>
+        <button class="btn btn-success" type="submit" :disabled="isPending">Register</button>
       </form>
     </div>
   </div>

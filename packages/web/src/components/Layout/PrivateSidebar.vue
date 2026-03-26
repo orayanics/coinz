@@ -5,8 +5,8 @@
         <RouterLink
           v-if="item.to"
           :to="item.to"
-          class="flex gap-2 text-base-content/60 hover:text-accent"
-          active-class="text-accent"
+          class="flex gap-2 text-base-content/60 hover:text-success"
+          active-class="text-success"
           @click="$emit('navigate')"
         >
           <component :is="item.icon" :size="24" />
@@ -15,7 +15,7 @@
 
         <button
           v-else
-          class="hover:text-accent cursor-pointer flex gap-2 text-base-content/60"
+          class="hover:text-success cursor-pointer flex gap-2 text-base-content/60"
           @click="
             () => {
               item.action?.()

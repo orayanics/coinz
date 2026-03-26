@@ -2,7 +2,7 @@
   <div class="flex flex-col gap-4 h-full">
     <!-- Search, filter, sort -->
     <div class="grid md:grid-cols-1 lg:grid-cols-7 gap-2 items-center">
-      <button class="btn btn-accent w-full col-span-7 lg:col-span-1" @click="openCreateWallet">
+      <button class="btn btn-success w-full col-span-7 lg:col-span-1" @click="openCreateWallet">
         Add Wallet
       </button>
 

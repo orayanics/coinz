@@ -1,14 +1,14 @@
 <template>
   <dialog ref="dialogRef" class="modal" @close="close">
     <div class="modal-box">
-      <h3 class="font-bold text-lg mb-4">Delete Wallet</h3>
-      <div class="alert alert-soft alert-warning">
+      <h3 class="font-bold text-lg mb-4">Delete Wallet Item</h3>
+      <div class="alert alert-error alert-soft">
         Are you sure to delete this wallet item? This will recompute the wallet's balance.
       </div>
 
       <span v-if="serverError" class="text-error text-sm">{{ serverError }}</span>
 
-      <div class="flex justify-end gap-2 pt-2">
+      <div class="flex justify-end gap-2 mt-6">
         <button type="button" class="btn btn-ghost" :disabled="isLoading" @click="close">
           Cancel
         </button>

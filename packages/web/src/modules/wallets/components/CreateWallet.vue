@@ -49,7 +49,7 @@
 
         <div class="modal-action">
           <button type="button" class="btn" @click="close">Cancel</button>
-          <button type="submit" class="btn btn-accent" :disabled="isPending">Create</button>
+          <button type="submit" class="btn btn-success" :disabled="isPending">Create</button>
         </div>
       </form>
     </div>

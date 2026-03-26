@@ -31,7 +31,7 @@
           </span>
         </fieldset>
 
-        <button class="btn btn-accent" type="submit" :disabled="isPending">Login</button>
+        <button class="btn btn-success" type="submit" :disabled="isPending">Login</button>
       </form>
     </div>
   </div>

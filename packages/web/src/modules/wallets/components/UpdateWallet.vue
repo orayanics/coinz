@@ -54,13 +54,22 @@
         </fieldset>
 
         <fieldset class="fieldset">
-          <label class="label">Hide Wallet</label>
-          <input type="checkbox" v-model="form.is_archived" class="toggle" />
+          <label class="label"
+            >Hide Wallet
+            <span class="text-xs text-gray-500"
+              >Hidden wallets will be excluded from any computations.</span
+            >
+          </label>
+          <div class="flex gap-2 items-center">
+            <input type="checkbox" v-model="form.is_archived" class="toggle" />
+            <PhEye v-if="form.is_archived" size="24" class="text-neutral-400" />
+            <PhEyeSlash v-else size="24" class="text-neutral-400" />
+          </div>
         </fieldset>
 
         <div class="modal-action">
           <button type="button" class="btn" @click="close">Cancel</button>
-          <button type="submit" class="btn btn-accent" :disabled="isPending">Update</button>
+          <button type="submit" class="btn btn-success" :disabled="isPending">Update</button>
         </div>
       </form>
     </div>
@@ -83,6 +92,7 @@ const props = defineProps<{
 import { computed, ref, watch } from 'vue'
 import { useUpdateWallet, useUpdateWalletForm } from '../hooks/useUpdateWallet'
 import type { TWalletUpdate } from '../schema'
+import { PhEye, PhEyeSlash } from '@phosphor-icons/vue'
 
 const { isOpen, close } = useUpdateWallet()
 const dialogRef = ref<HTMLDialogElement>()
