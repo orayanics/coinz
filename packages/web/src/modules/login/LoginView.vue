@@ -1,36 +1,39 @@
 <template>
-  <div>
-    <h1>Login Form</h1>
-
+  <div class="bg-base-100 flex-1 flex flex-col justify-center items-center">
     <p v-if="serverError">{{ serverError }}</p>
+    <div>
+      <form class="card-body" @submit.prevent="onFormSubmit">
+        <fieldset class="fieldset">
+          <label for="email">Email</label>
+          <input
+            class="input"
+            id="email"
+            v-model="form.email"
+            type="email"
+            placeholder="juan@example.com"
+          />
+          <span v-if="formErrors?.fieldErrors.email">
+            {{ formErrors.fieldErrors.email[0] }}
+          </span>
+        </fieldset>
 
-    <form @submit.prevent="onFormSubmit">
-      <div>
-        <label for="email">Email</label>
-        <input
-          class="input"
-          id="email"
-          v-model="form.email"
-          type="email"
-          placeholder="juan@example.com"
-        />
-        <span v-if="formErrors?.fieldErrors.email">
-          {{ formErrors.fieldErrors.email[0] }}
-        </span>
-      </div>
+        <fieldset class="fieldset">
+          <label for="password">Password</label>
+          <input
+            class="input"
+            id="password"
+            v-model="form.password"
+            type="password"
+            placeholder="********"
+          />
+          <span v-if="formErrors?.fieldErrors.password">
+            {{ formErrors.fieldErrors.password[0] }}
+          </span>
+        </fieldset>
 
-      <div>
-        <label for="password">Password</label>
-        <input class="input" id="password" v-model="form.password" type="password" />
-        <span v-if="formErrors?.fieldErrors.password">
-          {{ formErrors.fieldErrors.password[0] }}
-        </span>
-      </div>
-
-      <button class="btn" type="submit" :disabled="isPending">
-        {{ isPending ? 'Registering...' : 'Register' }}
-      </button>
-    </form>
+        <button class="btn btn-accent" type="submit" :disabled="isPending">Login</button>
+      </form>
+    </div>
   </div>
 </template>
 
