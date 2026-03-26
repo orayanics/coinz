@@ -39,6 +39,9 @@ export const useCreateWalletItemForm = (walletId: string) => {
       await queryClient.invalidateQueries({
         queryKey: walletKeys.detail(walletId),
       })
+      await queryClient.invalidateQueries({
+        queryKey: walletKeys.lists(),
+      })
       close()
     },
     onError: (error) => {
