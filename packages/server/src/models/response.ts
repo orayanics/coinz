@@ -6,7 +6,11 @@ export const ParamsQuery = t.Object({
   search: t.Optional(t.String()),
   sort: t.Optional(t.Union([t.Literal("asc"), t.Literal("desc")])),
   sortBy: t.Optional(
-    t.Union([t.Literal("created_at"), t.Literal("updated_at")]),
+    t.Union([
+      t.Literal("created_at"),
+      t.Literal("updated_at"),
+      t.Literal("date"),
+    ]),
   ),
 });
 

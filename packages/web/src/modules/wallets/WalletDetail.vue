@@ -25,7 +25,7 @@
       <div class="flex flex-col gap-4 col-span-1">
         <!-- Search, filter, sort -->
         <div class="grid md:grid-cols-1 lg:grid-cols-12 gap-2 items-center">
-          <label class="input w-full col-span-6 lg:col-span-4 flex items-center gap-2">
+          <label class="input w-full col-span-6 lg:col-span-12 flex items-center gap-2">
             <PhMagnifyingGlass />
             <input v-model="searchInput" type="text" placeholder="Search wallets..." />
           </label>
@@ -49,12 +49,7 @@
             </button>
           </div>
 
-          <select v-model="sortBy" class="select w-full col-span-6 lg:col-span-2">
-            <option value="created_at">Created</option>
-            <option value="updated_at">Updated</option>
-          </select>
-
-          <select v-model="sort" class="select w-full col-span-6 lg:col-span-2">
+          <select v-model="sort" class="select w-full col-span-12 lg:col-span-8">
             <option value="desc">Newest</option>
             <option value="asc">Oldest</option>
           </select>
@@ -184,12 +179,15 @@ const walletId = computed(() => route.params.walletId as string)
 const { data, isLoading, isError } = useQuery(computed(() => walletQueryOptions(walletId.value)))
 
 // Wallet Items
-const { page, sort, sortBy, searchInput, filter, params } = usePaginatedQuery({ limit: 10 })
+const { page, sort, searchInput, filter, params } = usePaginatedQuery({
+  limit: 10,
+  sortByDefault: 'date',
+})
 const {
   data: wallet_items,
   isLoading: isItemsLoading,
   isError: isItemsError,
-} = useQuery(walletItemsQueryOptions(params.value, walletId.value))
+} = useQuery(computed(() => walletItemsQueryOptions(params.value, walletId.value)))
 </script>
 
 <style scoped></style>

@@ -2,7 +2,13 @@ import { useRoute, useRouter } from 'vue-router'
 import { computed, watch } from 'vue'
 import { useDebouncedRef } from '@/utils/useDebouncedRef'
 
-export function usePaginatedQuery({ limit = 10 }: { limit?: number }) {
+export function usePaginatedQuery({
+  limit = 10,
+  sortByDefault = 'created_at',
+}: {
+  limit?: number
+  sortByDefault?: string
+}) {
   const route = useRoute()
   const router = useRouter()
 
@@ -17,7 +23,7 @@ export function usePaginatedQuery({ limit = 10 }: { limit?: number }) {
   })
 
   const sortBy = computed({
-    get: () => (route.query.sortBy as 'created_at' | 'updated_at') || 'created_at',
+    get: () => (route.query.sortBy as 'created_at' | 'updated_at') || sortByDefault,
     set: (val) => router.replace({ query: { ...route.query, sortBy: val } }),
   })
 
