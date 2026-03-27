@@ -13,14 +13,28 @@ export const WalletPlainSchema = z.object({
 
 export const WalletCreateSchema = z.object({
   balance: z.number().default(0),
-  name: z.string().min(1, 'Name is required'),
-  color: z.string().default('#94ff76'),
+  name: z.string().min(1, 'Name is required').max(30, 'Name must be at most 30 characters'),
+  color: z
+    .string()
+    .default('#f94144')
+    .refine((val) => WALLET_COLORS.includes(val), {
+      message: 'Color must be one of the allowed wallet colors',
+    }),
 })
 
 export const WalletUpdateSchema = z.object({
-  balance: z.number().min(0).optional(),
-  name: z.string().min(1).optional(),
-  color: z.string().optional(),
+  balance: z.number().optional(),
+  name: z
+    .string()
+    .min(1, 'Name is required')
+    .max(30, 'Name must be at most 30 characters')
+    .optional(),
+  color: z
+    .string()
+    .optional()
+    .refine((val) => !val || WALLET_COLORS.includes(val), {
+      message: 'Color must be one of the allowed wallet colors',
+    }),
   is_archived: z.boolean().optional(),
 })
 
@@ -37,3 +51,13 @@ export type TWallet = z.infer<typeof WalletPlainSchema>
 export type TWalletCreate = z.infer<typeof WalletCreateSchema>
 export type TWalletUpdate = z.infer<typeof WalletUpdateSchema>
 export type TWalletListQuery = z.infer<typeof WalletListQuerySchema>
+
+export const WALLET_COLORS = [
+  '#f94144',
+  '#f8961e',
+  '#f9c74f',
+  '#90be6d',
+  '#43aa8b',
+  '#705790',
+  '#277da1',
+]

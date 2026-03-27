@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import WalletCardChip from './WalletCardChip.vue'
-import WalletCardFooter from './WalletCardFooter.vue'
 import { type TWallet } from '@/modules/wallets/schema'
-import { PhEyeSlash } from '@phosphor-icons/vue'
+import { type TWalletSummaryWithActivity } from '@/api/useDashboard'
+import { PhCoins, PhEyeSlash } from '@phosphor-icons/vue'
+import { formatCurrency } from '@/utils/useDate'
 
-const props = defineProps<{ wallet: TWallet }>()
+const props = defineProps<{ wallet: TWallet | TWalletSummaryWithActivity }>()
 
 function hexToRgb(hex: string) {
   const c = hex.replace('#', '')
@@ -16,67 +16,55 @@ function hexToRgb(hex: string) {
   }
 }
 
-const rgb = computed(() => hexToRgb(props.wallet.color))
-const blobColor = computed(() => `rgba(${rgb.value.r}, ${rgb.value.g}, ${rgb.value.b}, 1)`)
-const blobColorAlt = computed(() => `rgba(${rgb.value.r}, ${rgb.value.g}, ${rgb.value.b}, 0.45)`)
+const rgb = computed(() => hexToRgb(props.wallet.color!))
 const glowShadow = computed(
   () => `0 4px 78px rgba(${rgb.value.r}, ${rgb.value.g}, ${rgb.value.b}, 0.1)`,
 )
-
-function seededRand(seed: number, index: number): number {
-  const x = Math.sin(seed * 9301 + index * 49297 + 233) * 10000
-  return x - Math.floor(x)
-}
-
-function blobRadius(seed: number, offset: number): string {
-  const v = Array.from({ length: 8 }, (_, i) =>
-    Math.round(100 + seededRand(seed, offset + i) * 50),
-  ) as [number, number, number, number, number, number, number, number]
-
-  return `${v[0]}% ${100 - v[0]}% ${100 - v[1]}% ${v[1]}% / ${v[2]}% ${v[3]}% ${100 - v[3]}% ${100 - v[2]}%`
-}
-
-const seed = computed(() => {
-  let hash = 0
-  for (let i = 0; i < props.wallet.id.length; i++) {
-    hash = props.wallet.id.charCodeAt(i) + ((hash << 5) - hash)
-  }
-  return Math.abs(hash)
-})
-
-const blobMainStyle = computed(() => ({
-  background: blobColor.value,
-  borderRadius: blobRadius(seed.value, 0),
-  width: `${Math.round(55 + seededRand(seed.value, 140) * 25)}%`,
-  height: `${Math.round(50 + seededRand(seed.value, 201) * 25)}%`,
-  top: `${Math.round(seededRand(seed.value, 12) * 30)}%`,
-  left: `${Math.round(10 + seededRand(seed.value, 293) * 40)}%`,
-}))
-
-const blobSecondaryStyle = computed(() => ({
-  background: blobColorAlt.value,
-  borderRadius: blobRadius(seed.value, 20),
-  width: `${Math.round(35 + seededRand(seed.value, 21) * 25)}%`,
-  height: `${Math.round(35 + seededRand(seed.value, 22) * 20)}%`,
-  bottom: `${Math.round(-10 + seededRand(seed.value, 23) * 25)}%`,
-  right: `${Math.round(-10 + seededRand(seed.value, 24) * 30)}%`,
-}))
 </script>
 
 <template>
-  <div class="wallet-card bg-base-300 overflow-hidden" :style="{ '--glow': glowShadow }">
-    <div class="blob" :style="blobMainStyle" />
-    <div class="blob" :style="blobSecondaryStyle" />
+  <div
+    class="wallet-card rounded-box bg-base-100 overflow-hidden"
+    :style="{ '--glow': glowShadow }"
+  >
+    <!-- <div class="blob" :style="blobMainStyle" />
+    <div class="blob" :style="blobSecondaryStyle" /> -->
 
-    <div class="glass-surface">
+    <div class="glass-surface rounded-box p-6">
       <div class="flex items-center justify-between">
-        <WalletCardChip />
-        <PhEyeSlash v-if="wallet.is_archived" size="32" class="text-neutral-400" />
+        <div class="flex gap-2 items-end">
+          <PhCoins
+            class="text-[38px]"
+            :style="{
+              fill: wallet.color,
+              filter: `drop-shadow(0px 2px 4px ${wallet.color}, 0.2)`,
+            }"
+          />
+        </div>
+        <PhEyeSlash v-if="wallet.is_archived" size="32" :style="{ fill: wallet.color }" />
       </div>
 
       <div class="flex-1" />
 
-      <WalletCardFooter :name="wallet.name" :balance="wallet.balance" />
+      <div class="w-full h-full z-20 relative mt-2 lg:mt-6 flex justify-between items-end">
+        <div class="flex flex-col gap-2 h-full">
+          <div class="flex-1">
+            <p
+              class="text-xl lg:text-4xl tabular-nums font-bold"
+              :class="wallet.balance! > 0 ? 'text-base-content' : ''"
+              :style="wallet.balance! <= 0 ? { color: wallet.color ?? undefined } : {}"
+            >
+              {{ formatCurrency(wallet.balance!) }}
+            </p>
+          </div>
+          <div>
+            <p class="text-xs text-base-content/60">Wallet</p>
+            <p class="text-xl font-semibold tracking-tight">
+              {{ wallet.name }}
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -85,11 +73,10 @@ const blobSecondaryStyle = computed(() => ({
 .wallet-card {
   position: relative;
   width: 100%;
-  aspect-ratio: 1.6;
-  border-radius: 20px;
+  aspect-ratio: 16/9;
   box-shadow:
     var(--glow),
-    0 8px 16px rgba(0, 0, 0, 0.4);
+    0 4px 16px rgba(0, 0, 0, 0.2);
   transition:
     transform 250ms cubic-bezier(0.175, 0.885, 0.32, 1.275),
     box-shadow 250ms ease;
@@ -100,7 +87,7 @@ const blobSecondaryStyle = computed(() => ({
   transform: translateY(-4px) scale(1.02);
   box-shadow:
     var(--glow),
-    0 12px 24px rgba(0, 0, 0, 0.5);
+    0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
 .blob {
@@ -116,17 +103,7 @@ const blobSecondaryStyle = computed(() => ({
   inset: 0;
   display: flex;
   flex-direction: column;
-  padding: 24px;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.15) 0%,
-    rgba(255, 255, 255, 0.04) 50%,
-    rgba(255, 255, 255, 0.1) 100%
-  );
-  backdrop-filter: blur(24px) saturate(1.2);
-  -webkit-backdrop-filter: blur(24px) saturate(1.2);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
   z-index: 10;
 }
 </style>

@@ -19,7 +19,7 @@ export const WalletCreate = t.Object({
 });
 
 export const WalletUpdate = t.Object({
-  balance: t.Optional(t.Number({ default: 0, minimum: 0 })),
+  balance: t.Optional(t.Number({ default: 0 })),
   name: t.Optional(t.String({ minLength: 1 })),
   color: t.Optional(t.String()),
   is_archived: t.Optional(t.Boolean()),

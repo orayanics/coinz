@@ -38,12 +38,22 @@
         </fieldset>
 
         <fieldset class="fieldset">
-          <label class="label"
-            >Color <span class="text-xs text-gray-500">Defaults to current color</span></label
-          >
-          <div class="flex items-center gap-3">
-            <input v-model="form.color" type="color" class="w-10 h-10 rounded cursor-pointer" />
-            <span class="text-sm text-gray-500">Pick a color for your wallet</span>
+          <label class="label">
+            Color <span class="text-xs text-gray-500">Choose from allowed colors</span>
+          </label>
+          <div class="flex flex-col lg:flex-row items-center gap-3">
+            <div class="grid grid-cols-5 gap-2">
+              <button
+                type="button"
+                v-for="color in WALLET_COLORS"
+                :key="color"
+                :style="{ backgroundColor: color }"
+                class="w-10 h-10 rounded border-2 border-gray-200"
+                :class="{ 'ring-2 ring-offset-1 ring-black': form.color === color }"
+                @click="form.color = color"
+              ></button>
+            </div>
+            <p class="text-sm text-gray-500">Pick a color for your wallet</p>
           </div>
         </fieldset>
 
@@ -66,6 +76,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import { useCreateWallet, useCreateWalletForm } from '../hooks/useCreateWallet'
+import { WALLET_COLORS } from '../schema'
 
 const { isOpen, close } = useCreateWallet()
 const dialogRef = ref<HTMLDialogElement>()

@@ -5,6 +5,7 @@ import { cors } from "@elysiajs/cors";
 import { authModule } from "./modules/auth";
 import { walletsModule } from "./modules/wallets";
 import { walletItemsModule } from "./modules/wallet_items";
+import { dashboardModule } from "./modules/dashboard";
 
 const app = new Elysia()
   .use(
@@ -59,6 +60,7 @@ const app = new Elysia()
   .use(authModule)
   .use(walletsModule)
   .use(walletItemsModule)
+  .use(dashboardModule)
   .listen(3000);
 
 console.log(

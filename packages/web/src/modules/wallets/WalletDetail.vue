@@ -15,7 +15,7 @@
       <!-- Wallet -->
       <div class="col-span-1">
         <WalletCard :wallet="data" />
-        <div class="flex justify-center gap-2 mt-4">
+        <div class="grid grid-cols-1 lg:grid-cols-3 justify-center gap-2 mt-6">
           <button class="btn" @click="openCreateItem">Add Item</button>
           <button class="btn" @click="openUpdateWallet">Edit Wallet</button>
           <button class="btn btn-error" @click="openDeleteWallet">Delete Wallet</button>
@@ -63,9 +63,9 @@
         <!-- Wallet Items -->
         <div
           v-else
-          className="overflow-x-auto rounded-lg border border-base-content/20 bg-base-100"
+          className="overflow-x-auto rounded-box border border-base-content/20 bg-base-100"
         >
-          <table className="table">
+          <table className="table table-xs lg:table-md">
             <thead>
               <tr>
                 <th>Note</th>

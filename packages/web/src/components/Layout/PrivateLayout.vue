@@ -2,7 +2,7 @@
   <main class="h-screen w-screen flex overflow-hidden">
     <aside
       v-if="sidebarOpen"
-      class="bg-base-100 p-4 w-20 border-r border-neutral-600 flex flex-col justify-between shrink-0 z-20"
+      class="bg-base-100 p-4 w-20 border-r border-base-content/20 flex flex-col justify-between shrink-0 z-20"
     >
       <div class="flex flex-col items-center gap-4">
         <RouterLink to="/app/dashboard">
@@ -38,7 +38,7 @@
     </aside>
 
     <div class="flex flex-col flex-1 min-w-0">
-      <header class="navbar bg-base-100 border-b border-neutral-600">
+      <header class="navbar bg-base-100 border-b border-base-content/20">
         <div class="flex justify-between gap-2 mx-2 w-full">
           <div class="flex items-center gap-2">
             <button type="button" class="cursor-pointer" @click="toggleSidebar">

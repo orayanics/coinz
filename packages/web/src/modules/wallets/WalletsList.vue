@@ -49,6 +49,7 @@
       v-model:page="page"
       :total-pages="data.meta.total_pages"
       :total="data.meta.total"
+      class="pb-4 lg:pb-0"
     />
   </div>
 </template>

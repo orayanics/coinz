@@ -1,7 +1,7 @@
 <template>
   <div class="h-screen flex flex-col">
     <header
-      class="flex justify-between items-center w-screen border-b border-neutral-600 py-2 px-4 gap-4"
+      class="flex justify-between items-center w-screen border-b border-base-content/20 py-2 px-4 gap-4"
     >
       <div>
         <RouterLink to="/">
