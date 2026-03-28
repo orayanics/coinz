@@ -2,40 +2,13 @@ import { db } from "@/lib/prisma";
 import { Decimal } from "@prisma/client/runtime/client";
 import { checkWalletAccess } from "@/lib/wallet";
 import { paginate, TPaginationQuery } from "@/models/response";
-
-// ============================================================
-// Filter & query types
-// ============================================================
-
-export type TDateRangeFilter = {
-  from?: Date;
-  to?: Date;
-  month?: number; // 1–12
-  year?: number;
-};
-
-export type TItemTypeFilter = {
-  type?: "INCOME" | "EXPENSE";
-};
-
-export type TWalletSortQuery = {
-  sort?: "asc" | "desc";
-  sortBy?: "balance" | "name" | "activity";
-  include_archived?: boolean;
-};
-
-export type TCrossWalletQuery = TDateRangeFilter & {
-  include_archived?: boolean;
-};
-
-export type TPerWalletQuery = TDateRangeFilter &
-  TItemTypeFilter & {
-    granularity?: "week" | "month";
-  };
-
-// ============================================================
-// Internal helpers
-// ============================================================
+import type {
+  TWalletDashboardQuery,
+  TCrossWalletDashboardQuery,
+  TDateRangeFilter,
+  TItemTypeFilter,
+  TWalletListQuery,
+} from "./model";
 
 /**
  * Resolves TDateRangeFilter into a Prisma DateTime filter.
@@ -73,10 +46,6 @@ const toNum = (d: Decimal | number | null | undefined): number => {
   if (typeof d === "number") return d;
   return d.toNumber();
 };
-
-// ============================================================
-// Per-wallet statistics
-// ============================================================
 
 /**
  * Returns total income, total expense, and net change for a wallet.
@@ -299,7 +268,10 @@ export const getAggregateBalance = async (
  */
 export const getCrossWalletIncomeVsExpense = async (
   user_id: string,
-  { include_archived = false, ...dateFilterInput }: TCrossWalletQuery = {},
+  {
+    include_archived = false,
+    ...dateFilterInput
+  }: TCrossWalletDashboardQuery = {},
 ) => {
   const dateFilter = resolveDateFilter(dateFilterInput);
 
@@ -342,17 +314,13 @@ export const getCrossWalletIncomeVsExpense = async (
   };
 };
 
-// ============================================================
-// Wallet listing with sort + archive toggle (for drill-down UI)
-// ============================================================
-
 /**
  * Returns wallets with their activity count for the dashboard wallet list.
  * Supports sort by balance, name, or activity count.
  */
 export const getWalletsSorted = async (
   user_id: string,
-  params: TWalletSortQuery & TPaginationQuery,
+  params: TWalletListQuery & TPaginationQuery,
 ) => {
   const {
     page = 1,
@@ -423,10 +391,6 @@ export const getWalletsSorted = async (
   };
 };
 
-// ============================================================
-// Composite: full per-wallet dashboard payload (single wallet drill-down)
-// ============================================================
-
 /**
  * Aggregates all per-wallet stats in parallel for the drill-down view.
  * Reduces round-trips when the client needs the full wallet dashboard.
@@ -434,7 +398,7 @@ export const getWalletsSorted = async (
 export const getWalletDashboard = async (
   wallet_id: string,
   user_id: string,
-  filter: TPerWalletQuery = {},
+  filter: TWalletDashboardQuery = {},
 ) => {
   const { granularity = "month", type, ...dateFilter } = filter;
 
@@ -465,16 +429,12 @@ export const getWalletDashboard = async (
   };
 };
 
-// ============================================================
-// Composite: full cross-wallet dashboard payload
-// ============================================================
-
 /**
  * Aggregates all cross-wallet stats in parallel for the overview dashboard.
  */
 export const getCrossWalletDashboard = async (
   user_id: string,
-  query: TCrossWalletQuery = {},
+  query: TCrossWalletDashboardQuery = {},
 ) => {
   const [aggregateBalance, incomeVsExpense] = await Promise.all([
     getAggregateBalance(user_id, query.include_archived),

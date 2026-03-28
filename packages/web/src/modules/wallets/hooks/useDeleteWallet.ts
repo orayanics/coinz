@@ -5,6 +5,7 @@ import { useMutation } from '@tanstack/vue-query'
 import { deleteWalletMutationOptions, walletKeys } from '@/api/useWallets'
 import { useQueryClient } from '@tanstack/vue-query'
 import { isAxiosError } from 'axios'
+import { dashboardKeys } from '@/api/useDashboard'
 
 const walletDeleteModal = useModal()
 export const useDeleteWallet = () => walletDeleteModal
@@ -20,6 +21,7 @@ export const useDeleteWalletForm = (walletId: string) => {
     ...deleteWalletMutationOptions(),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: walletKeys.lists() })
+      await queryClient.invalidateQueries({ queryKey: dashboardKeys.all })
       close()
       router.push('/app/wallets')
     },

@@ -28,15 +28,7 @@ export const dashboardModule = new Elysia({
   .get(
     "/",
     async ({ userId, query, status }) => {
-      const result = await tryOk(() =>
-        getCrossWalletDashboard(userId, {
-          from: query.from ? new Date(query.from) : undefined,
-          to: query.to ? new Date(query.to) : undefined,
-          month: query.month,
-          year: query.year,
-          include_archived: query.include_archived,
-        }),
-      );
+      const result = await tryOk(() => getCrossWalletDashboard(userId, query));
       if (!result.success) return status(400, result);
       return status(200, ok(result.data));
     },
@@ -92,14 +84,7 @@ export const dashboardModule = new Elysia({
     "/wallets/:id",
     async ({ params, userId, query, status }) => {
       const result = await tryOk(() =>
-        getWalletDashboard(params.id, userId, {
-          from: query.from ? new Date(query.from) : undefined,
-          to: query.to ? new Date(query.to) : undefined,
-          month: query.month,
-          year: query.year,
-          type: query.type,
-          granularity: query.granularity,
-        }),
+        getWalletDashboard(params.id, userId, query),
       );
       if (!result.success) return status(400, result);
       return status(200, ok(result.data));

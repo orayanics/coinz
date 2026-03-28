@@ -3,8 +3,6 @@ import { z } from 'zod'
 import api from './axios'
 import { ApiSuccess, Paginated } from '@/models/response'
 
-// ── Query param types (mirror backend model.ts) ───────────────────────────────
-
 export type TCrossWalletDashboardQuery = {
   from?: string
   to?: string
@@ -29,8 +27,6 @@ export type TWalletDashboardQuery = {
   type?: 'INCOME' | 'EXPENSE'
   granularity?: 'week' | 'month'
 }
-
-// ── Response schemas ──────────────────────────────────────────────────────────
 
 const WalletSummarySchema = z.object({
   id: z.string(),
@@ -86,8 +82,6 @@ const AggregateBalanceSchema = z.object({
   count_wallets: z.number(),
 })
 
-// Composite response schemas
-
 export const CrossWalletDashboardSchema = z.object({
   aggregate_balance: AggregateBalanceSchema,
   income_vs_expense: IncomeVsExpenseRowSchema,
@@ -101,8 +95,6 @@ export const WalletDashboardSchema = z.object({
   spending_by_period: z.array(SpendingPeriodSchema),
 })
 
-// Inferred types
-
 export type TCrossWalletDashboard = z.infer<typeof CrossWalletDashboardSchema>
 export type TWalletDashboard = z.infer<typeof WalletDashboardSchema>
 export type TWalletSummaryWithActivity = z.infer<typeof WalletSummaryWithActivitySchema>
@@ -110,8 +102,6 @@ export type TNetChange = z.infer<typeof NetChangeSchema>
 export type TSpendingPeriod = z.infer<typeof SpendingPeriodSchema>
 export type TNetWorthPoint = z.infer<typeof NetWorthPointSchema>
 export type TIncomeVsExpenseRow = z.infer<typeof IncomeVsExpenseRowSchema>
-
-// ── Query key factory ─────────────────────────────────────────────────────────
 
 export const dashboardKeys = {
   all: ['dashboard'] as const,
@@ -121,8 +111,6 @@ export const dashboardKeys = {
   wallet: (id: string, params: TWalletDashboardQuery) =>
     [...dashboardKeys.all, 'wallet', id, params] as const,
 }
-
-// ── Query options ─────────────────────────────────────────────────────────────
 
 export const crossWalletDashboardQueryOptions = (params: TCrossWalletDashboardQuery = {}) =>
   queryOptions({

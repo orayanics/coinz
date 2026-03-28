@@ -1,7 +1,4 @@
-import { PaginationQuery } from "@/models/response";
 import { t } from "elysia";
-
-// ── Query schemas ────────────────────────────────────────────
 
 export const DateRangeQuery = t.Object({
   from: t.Optional(t.String({ format: "date-time" })),
@@ -29,28 +26,29 @@ export const WalletSortQuery = t.Object({
   ),
 });
 
-// Composed query for per-wallet drill-down
 export const WalletDashboardQuery = t.Composite([
   DateRangeQuery,
   ItemTypeQuery,
   GranularityQuery,
 ]);
 
-// Composed query for cross-wallet overview
 export const CrossWalletDashboardQuery = t.Composite([
   DateRangeQuery,
   ArchiveToggleQuery,
 ]);
 
-// Composed query for wallet list
 export const WalletListQuery = t.Composite([
   ArchiveToggleQuery,
   WalletSortQuery,
 ]);
 
-// ── Static types ─────────────────────────────────────────────
-
 export type TWalletDashboardQuery = typeof WalletDashboardQuery.static;
 export type TCrossWalletDashboardQuery =
   typeof CrossWalletDashboardQuery.static;
 export type TWalletListQuery = typeof WalletListQuery.static;
+
+export type TDateRangeFilter = typeof DateRangeQuery.static;
+export type TItemTypeFilter = typeof ItemTypeQuery.static;
+export type TGranularityFilter = typeof GranularityQuery.static;
+export type TArchiveToggleFilter = typeof ArchiveToggleQuery.static;
+export type TWalletSortQuery = typeof WalletSortQuery.static;
