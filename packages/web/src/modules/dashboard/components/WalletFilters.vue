@@ -1,5 +1,5 @@
 <template>
-  <div class="grid md:grid-cols-1 lg:grid-cols-2 gap-4 items-center">
+  <div class="grid md:grid-cols-1 lg:grid-cols-2 gap-4 items-center" id="wallet-list-section">
     <p class="font-semibold md:col-span-2 lg:col-span-1">Wallets</p>
 
     <div class="md:col-span-2 lg:col-span-1 flex flex-col lg:flex-row justify-end gap-2">

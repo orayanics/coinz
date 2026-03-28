@@ -2,7 +2,7 @@
   <main class="h-screen w-screen flex overflow-hidden">
     <aside
       v-if="sidebarOpen"
-      class="bg-base-100 p-4 w-20 border-r border-base-content/20 flex flex-col justify-between shrink-0 z-20"
+      class="bg-slate-50 p-4 w-20 border-r border-base-content/20 flex flex-col justify-between shrink-0 z-20"
     >
       <div class="flex flex-col items-center gap-4">
         <RouterLink to="/app/dashboard">
@@ -38,7 +38,7 @@
     </aside>
 
     <div class="flex flex-col flex-1 min-w-0">
-      <header class="navbar bg-base-100 border-b border-base-content/20">
+      <header class="navbar bg-slate-50 border-b border-base-content/20">
         <div class="flex justify-between gap-2 mx-2 w-full">
           <div class="flex items-center gap-2">
             <button type="button" class="cursor-pointer" @click="toggleSidebar">
@@ -49,7 +49,7 @@
         </div>
       </header>
 
-      <div class="flex flex-1 bg-base-100 overflow-hidden">
+      <div class="flex flex-1 bg-slate-50 overflow-hidden">
         <div class="drawer">
           <input id="priv-drawer" type="checkbox" class="drawer-toggle" v-model="drawerOpen" />
           <div class="drawer-content h-full overflow-y-auto p-4 [scrollbar-width:thin]">
@@ -61,7 +61,7 @@
           </div>
           <div class="drawer-side z-20">
             <label for="priv-drawer" aria-label="close sidebar" class="drawer-overlay" />
-            <ul class="menu p-6 bg-base-100 min-h-full w-full flex flex-col gap-6">
+            <ul class="menu p-6 bg-slate-50 min-h-full w-full flex flex-col gap-6">
               <button
                 type="button"
                 class="cursor-pointer hover:text-success"

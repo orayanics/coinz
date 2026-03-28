@@ -112,6 +112,7 @@ export function useDashboardWalletListQuery() {
     include_archived: includeArchived.value || undefined,
     sort: sort.value,
     sortBy: sortBy.value,
+    limit: 5,
   }))
 
   return { includeArchived, sort, sortBy, params, page }

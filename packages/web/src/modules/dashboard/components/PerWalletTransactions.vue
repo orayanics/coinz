@@ -1,5 +1,5 @@
 <template>
-  <div class="stats border-dashed border border-base-content/20">
+  <div class="stats rounded-xl border-dashed border border-base-content/20">
     <div class="stat">
       <div class="stat-title">Avg Transaction</div>
       <div class="stat-value">

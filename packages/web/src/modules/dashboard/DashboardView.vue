@@ -1,84 +1,100 @@
 <template>
   <div class="flex flex-col gap-6 min-h-full">
-    <!-- Overview -->
-    <OverviewFilters
-      v-model:month="month"
-      v-model:year="year"
-      v-model:include-archived="includeArchived"
-      :months="MONTHS"
-      :years="YEARS"
-    />
-    <StateLoading v-if="overviewLoading" />
-    <StateError v-else-if="overviewError" />
-    <StateNull v-else-if="!overview" />
-    <OverviewStats v-else :overview="overview" />
-
-    <!-- ── Wallets -->
-    <WalletFilters v-model:sort="listSort" v-model:sort-by="listSortBy" />
-    <StateLoading v-if="walletListLoading" />
-    <StateError v-else-if="walletListError" />
-    <StateNull v-else-if="!walletList?.items.length" />
-    <WalletList v-else :items="walletList.items" @select-wallet="selectWallet" />
-    <PaginationActions
-      v-if="walletList"
-      v-model:page="page"
-      :total-pages="walletList.meta.total_pages"
-      :total="walletList.meta.total"
-    />
-
-    <!-- Per-wallet -->
-    <template v-if="selectedWalletId">
-      <div class="divider h-1! my-0!" id="per-wallet-section" />
-      <PerWalletFilters
-        :wallet_name="drilldownData?.wallet.name ?? ''"
-        v-model:month="drillMonth"
-        v-model:year="drillYear"
-        v-model:type="drillType"
-        v-model:granularity="drillGranularity"
-        :months="MONTHS"
-        :years="YEARS"
-        :wallet_id="selectedWalletId"
-      />
-
-      <StateLoading v-if="drilldownLoading" />
-      <StateError v-else-if="drilldownError" />
-      <StateNull v-else-if="!drilldownData" />
-
-      <template v-else-if="drilldownData">
-        <PerWalletNet
-          :wallet-balance="drilldownData.wallet.balance"
-          :income="drilldownData.net_change.income"
-          :expense="drilldownData.net_change.expense"
-          :net="drilldownData.net_change.net"
-        />
-        <PerWalletTransactions
-          :average="drilldownData.average_transaction.average"
-          :count="drilldownData.average_transaction.count"
-          :max="drilldownData.average_transaction.max"
-          :min="drilldownData.average_transaction.min"
-        />
-
-        <!-- Balance over time -->
-        <div
-          v-if="drilldownData.balance_over_time.length"
-          class="border-dashed border border-base-content/20 card p-4 gap-2"
-        >
-          <p class="font-semibold text-sm">Balance Over Time</p>
-          <BalanceChart :points="drilldownData.balance_over_time" />
+    <div class="grid md:grid-cols-12 grid-cols-1 gap-6">
+      <div class="flex flex-col gap-6 md:col-span-8 col-span-1">
+        <!-- Overview -->
+        <div class="flex flex-col gap-6">
+          <OverviewFilters
+            v-model:month="month"
+            v-model:year="year"
+            v-model:include-archived="includeArchived"
+            :months="MONTHS"
+            :years="YEARS"
+          />
+          <StateLoading v-if="overviewLoading" />
+          <StateError v-else-if="overviewError" />
+          <StateNull v-else-if="!overview" />
+          <OverviewStats v-else :overview="overview" />
         </div>
 
-        <!-- Spending by period -->
-        <div
-          v-if="drilldownData.spending_by_period.length"
-          class="border-dashed border border-base-content/20 card p-4 gap-2"
-        >
-          <p class="font-semibold text-sm">
-            {{ drillGranularity === 'week' ? 'Weekly' : 'Monthly' }} Breakdown
-          </p>
-          <SpendingChart :periods="drilldownData.spending_by_period" />
-        </div>
-      </template>
-    </template>
+        <!-- Per-wallet -->
+        <template v-if="selectedWalletId">
+          <div class="divider h-1! my-0!" id="per-wallet-section" />
+          <PerWalletFilters
+            :wallet_name="drilldownData?.wallet.name ?? ''"
+            v-model:month="drillMonth"
+            v-model:year="drillYear"
+            v-model:type="drillType"
+            v-model:granularity="drillGranularity"
+            :months="MONTHS"
+            :years="YEARS"
+            :wallet_id="selectedWalletId"
+          />
+
+          <StateLoading v-if="drilldownLoading" />
+          <StateError v-else-if="drilldownError" />
+          <StateNull v-else-if="!drilldownData" />
+
+          <template v-else-if="drilldownData">
+            <PerWalletNet
+              :wallet-balance="drilldownData.wallet.balance"
+              :income="drilldownData.net_change.income"
+              :expense="drilldownData.net_change.expense"
+              :net="drilldownData.net_change.net"
+            />
+            <PerWalletTransactions
+              :average="drilldownData.average_transaction.average"
+              :count="drilldownData.average_transaction.count"
+              :max="drilldownData.average_transaction.max"
+              :min="drilldownData.average_transaction.min"
+            />
+
+            <!-- Balance over time -->
+            <div
+              v-if="drilldownData.balance_over_time.length"
+              class="rounded-xl border-dashed border border-base-content/20 card p-4 gap-2"
+            >
+              <p class="font-semibold text-sm">Balance Over Time</p>
+              <BalanceChart :points="drilldownData.balance_over_time" />
+            </div>
+
+            <!-- Spending by period -->
+            <div
+              v-if="drilldownData.spending_by_period.length"
+              class="rounded-xl border-dashed border border-base-content/20 card p-4 gap-2"
+            >
+              <p class="font-semibold text-sm">
+                {{ drillGranularity === 'week' ? 'Weekly' : 'Monthly' }} Breakdown
+              </p>
+              <SpendingChart :periods="drilldownData.spending_by_period" />
+            </div>
+          </template>
+        </template>
+
+        <template v-else>
+          <div
+            class="h-full flex items-center justify-center border border-dashed border-base-content/20 rounded-xl"
+          >
+            <p>Select a wallet</p>
+          </div>
+        </template>
+      </div>
+
+      <!-- Wallets -->
+      <div class="md:col-span-4 col-span-1 space-y-6 md:sticky md:top-6 self-start">
+        <WalletFilters v-model:sort="listSort" v-model:sort-by="listSortBy" />
+        <StateLoading v-if="walletListLoading" />
+        <StateError v-else-if="walletListError" />
+        <StateNull v-else-if="!walletList?.items.length" />
+        <WalletList v-else :items="walletList.items" @select-wallet="selectWallet" />
+        <PaginationActions
+          v-if="walletList"
+          v-model:page="page"
+          :total-pages="walletList.meta.total_pages"
+          :total="walletList.meta.total"
+        />
+      </div>
+    </div>
   </div>
 </template>
 

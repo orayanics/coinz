@@ -1,5 +1,5 @@
 <template>
-  <div class="stats border-dashed border border-base-content/20">
+  <div class="stats rounded-xl border-dashed border border-base-content/20">
     <div v-if="walletBalance !== undefined && walletBalance !== null" class="stat">
       <div class="stat-title">Balance</div>
       <div class="stat-value">

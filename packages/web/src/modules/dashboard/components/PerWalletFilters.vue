@@ -1,9 +1,15 @@
 <template>
   <div class="flex flex-col gap-4">
-    <RouterLink :to="`/app/wallets/${props.wallet_id}`" class="flex items-center">
-      <PhWallet class="inline-block text-2xl mr-2" />
-      <p class="text-2xl font-semibold truncate">{{ props.wallet_name }}</p>
-    </RouterLink>
+    <div class="flex md:flex-row flex-col gap-2 justify-between">
+      <RouterLink :to="`/app/wallets/${props.wallet_id}`" class="flex items-center">
+        <PhWallet class="inline-block text-2xl mr-2" />
+        <p class="text-2xl font-semibold truncate">{{ props.wallet_name }}</p>
+      </RouterLink>
+
+      <button class="block md:hidden btn btn-primary" @click="scrollWallet">
+        Scroll to Wallets
+      </button>
+    </div>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-2 items-center">
       <select class="select col-span-1" :value="month ?? ''" @change="onMonthChange">
         <option value="">All months</option>
@@ -78,5 +84,12 @@ const onTypeChange = (e: Event) => {
 const onGranularityChange = (e: Event) => {
   const value = (e.target as HTMLSelectElement).value
   emit('update:granularity', value === '' ? undefined : value)
+}
+
+const scrollWallet = async () => {
+  const el = document.getElementById('wallet-list-section')
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth' })
+  }
 }
 </script>
