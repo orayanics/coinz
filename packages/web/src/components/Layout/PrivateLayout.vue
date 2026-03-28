@@ -17,7 +17,7 @@
             <PhWallet class="w-10 h-10 p-2" />
           </RouterLink>
           <RouterLink
-            to="/app/settings"
+            to="/app/profile"
             class="tooltip tooltip-right tooltip-success"
             data-tip="Profile"
           >

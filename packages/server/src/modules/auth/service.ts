@@ -1,5 +1,9 @@
 import { db } from "@/lib/prisma";
-import type { TUserLogin, TUserRegister } from "@/modules/auth/model";
+import type {
+  TUserLogin,
+  TUserRegister,
+  TUserUpdate,
+} from "@/modules/auth/model";
 
 export const register = async (data: TUserRegister) => {
   const existing = await db.user.findUnique({
@@ -36,4 +40,54 @@ export const refresh = async (user_id: string) => {
   const user = await db.user.findUnique({ where: { id: user_id } });
   if (!user) throw new Error("User not found");
   return user.id;
+};
+
+export const updateProfile = async (user_id: string, data: TUserUpdate) => {
+  const user = await db.user.findUnique({ where: { id: user_id } });
+  if (!user) throw new Error("User not found");
+
+  const updateData: TUserUpdate = {};
+
+  if (data.name !== undefined) {
+    updateData.name = data.name;
+  }
+
+  if (data.new_password !== undefined) {
+    if (!data.old_password) {
+      throw new Error("old_password is required when changing password");
+    }
+
+    const isOldPasswordCorrect = await Bun.password.verify(
+      data.old_password,
+      user.password,
+    );
+    if (!isOldPasswordCorrect) {
+      throw new Error("Old password is incorrect");
+    }
+
+    const isSame = await Bun.password.verify(data.new_password, user.password);
+    if (isSame) {
+      throw new Error(
+        "New password cannot be the same as the current password",
+      );
+    }
+
+    updateData.new_password = await Bun.password.hash(data.new_password);
+  }
+
+  if (Object.keys(updateData).length === 0) {
+    throw new Error("No valid fields provided to update");
+  }
+
+  return db.user.update({
+    where: { id: user_id },
+    data: updateData,
+    select: { id: true, name: true },
+  });
+};
+
+export const getUser = async (user_id: string) => {
+  const user = await db.user.findUnique({ where: { id: user_id } });
+  if (!user) throw new Error("User not found");
+  return user;
 };

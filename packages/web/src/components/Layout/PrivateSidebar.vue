@@ -52,7 +52,7 @@ const navItems = [
   { to: '/app/dashboard', icon: PhHouse, label: 'Dashboard' },
   { to: '/app/wallets', icon: PhWallet, label: 'Wallets' },
   //   { to: '/app/transactions', icon: PhReceipt, label: 'Transactions' },
-  { to: '/app/settings', icon: PhGear, label: 'Settings' },
+  { to: '/app/profile', icon: PhGear, label: 'profile' },
   { to: '', icon: PhSignOut, label: 'Logout', action: logout },
 ]
 </script>

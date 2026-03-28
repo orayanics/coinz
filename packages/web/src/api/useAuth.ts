@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from '@tanstack/vue-query'
+import { queryOptions, useMutation, useQueryClient } from '@tanstack/vue-query'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import api from '@/api/axios'
@@ -51,3 +51,12 @@ export const useRegister = () => {
     },
   })
 }
+
+export const useUserQuery = () =>
+  queryOptions({
+    queryKey: ['user'],
+    queryFn: async () => {
+      const { data } = await api.get('/auth/me')
+      return data.data
+    },
+  })

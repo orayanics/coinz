@@ -42,9 +42,9 @@ const router = createRouter({
           component: () => import('@/modules/wallets/WalletDetail.vue'),
         },
         {
-          path: 'settings',
-          name: 'settings',
-          component: () => import('@/modules/settings/SettingsView.vue'),
+          path: 'profile',
+          name: 'profile',
+          component: () => import('@/modules/profile/ProfileView.vue'),
         },
       ],
     },
