@@ -9,11 +9,11 @@
   --color-base-100: oklch(100% 0 0);
   --color-base-200: oklch(98% 0 0);
   --color-base-300: oklch(95% 0 0);
-  --color-base-content: oklch(21% 0.006 285.885);
-  --color-primary: oklch(45% 0.24 277.023);
-  --color-primary-content: oklch(93% 0.034 272.788);
-  --color-secondary: oklch(65% 0.241 354.308);
-  --color-secondary-content: oklch(94% 0.028 342.258);
+  --color-base-content: oklch(20% 0.042 265.755);
+  --color-primary: oklch(69% 0.17 162.48);
+  --color-primary-content: oklch(100% 0 0);
+  --color-secondary: oklch(100% 0 0);
+  --color-secondary-content: oklch(69% 0.17 162.48);
   --color-accent: oklch(77% 0.152 181.912);
   --color-accent-content: oklch(38% 0.063 188.416);
   --color-neutral: oklch(14% 0.005 285.823);
@@ -25,13 +25,43 @@
   --color-warning: oklch(82% 0.189 84.429);
   --color-warning-content: oklch(41% 0.112 45.904);
   --color-error: oklch(71% 0.194 13.428);
-  --color-error-content: oklch(27% 0.105 12.094);
-  --radius-selector: 0.5rem;
-  --radius-field: 0.25rem;
-  --radius-box: 0.5rem;
+  --color-error-content: oklch(100% 0 0);
+  --radius-selector: 2rem;
+  --radius-field: 2rem;
+  --radius-box: 2rem;
   --size-selector: 0.25rem;
   --size-field: 0.25rem;
   --border: 1px;
   --depth: 1;
   --noise: 0;
+}
+
+.input.input:focus,
+.input.input:focus-within {
+  --input-color: var(--color-primary);
+  outline: none;
+}
+
+/* Target autofill properly */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-text-fill-color: white !important;
+  background-color: none !important;
+  background: transparent !important;
+  /* Override the blue background */
+  box-shadow: 0 0 0px 1000px transparent inset !important;
+
+  /* Prevent flash of default color */
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+@layer components {
+  .arch-overlay {
+    @apply absolute top-[10%] md:top-[5%]  left-1/2 -translate-x-1/2 w-full max-w-7xl rounded-t-full border-t-2 border-emerald-400 pointer-events-none -z-10;
+    aspect-ratio: 2 / 1;
+    background: linear-gradient(to bottom, white, transparent);
+    box-shadow: inset 0 20px 40px -20px rgba(16, 185, 129, 0.4);
+  }
 }

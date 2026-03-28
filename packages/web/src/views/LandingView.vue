@@ -2,9 +2,8 @@
   <div>
     <!-- Hero Section -->
     <main class="relative pt-34 pb-16 px-6 text-center flex flex-col items-center z-10">
-      <div
-        class="absolute top-[10%] md:top-[5%] left-1/2 -translate-x-1/2 w-full max-w-8xl aspect-2/1 bg-linear-to-b from-white to-transparent rounded-t-full border-t-2 border-emerald-400 shadow-[inset_0_20px_40px_-20px_rgba(16,185,129,0.4)] -z-10 pointer-events-none"
-      />
+      <div class="grid-overlay" />
+      <div class="arch-overlay" />
       <div class="inline-flex items-center mt-0 md:mt-16 gap-2 px-3 py-1.5 mb-8">
         <span class="flex relative px-2 md:px-6">
           <PhCoins size="62" class="text-emerald-500 drop-shadow-sm drop-shadow-emerald-500/40" />
@@ -24,17 +23,13 @@
         set budgets, and achieve your financial goals with ease.
       </p>
 
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-        <RouterLink
-          to="/register"
-          class="px-8 py-3.5 rounded-full bg-emerald-500 text-white font-bold text-sm transition-all hover:bg-emerald-600 shadow-[0_4px_14px_0_rgba(16,185,129,0.39)] flex items-center gap-2"
-        >
-          Get Started
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linej d="M9 5l7 7-7 7" />
-          </svg>
-        </RouterLink>
-      </div>
+      <RouterLink
+        to="/register"
+        class="btn btn-primary shadow-md shadow-emerald-400/20 flex items-center gap-2"
+      >
+        Get Started
+        <PhCaretRight size="16" weight="bold" />
+      </RouterLink>
     </main>
 
     <!-- Bento Grid Section -->
@@ -166,7 +161,7 @@
 </template>
 
 <script setup lang="ts">
-import { PhCoins } from '@phosphor-icons/vue'
+import { PhCaretRight, PhCoins } from '@phosphor-icons/vue'
 </script>
 
 <style scoped></style>
