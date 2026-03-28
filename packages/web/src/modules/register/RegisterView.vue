@@ -1,6 +1,6 @@
 <template>
   <div class="bg-base-100 flex-1 flex flex-col justify-center items-center">
-    <p v-if="serverError">{{ serverError }}</p>
+    <p v-if="serverError" class="text-error">{{ serverError }}</p>
 
     <div>
       <form class="card-body" @submit.prevent="onFormSubmit">
@@ -13,7 +13,7 @@
             type="text"
             placeholder="Juan dela Cruz"
           />
-          <span v-if="formErrors?.fieldErrors.name">
+          <span v-if="formErrors?.fieldErrors.name" class="text-error">
             {{ formErrors.fieldErrors.name[0] }}
           </span>
         </fieldset>
@@ -27,7 +27,7 @@
             type="email"
             placeholder="juan@example.com"
           />
-          <span v-if="formErrors?.fieldErrors.email">
+          <span v-if="formErrors?.fieldErrors.email" class="text-error">
             {{ formErrors.fieldErrors.email[0] }}
           </span>
         </fieldset>
@@ -41,7 +41,7 @@
             type="password"
             placeholder="********"
           />
-          <span v-if="formErrors?.fieldErrors.password">
+          <span v-if="formErrors?.fieldErrors.password" class="text-error">
             {{ formErrors.fieldErrors.password[0] }}
           </span>
         </fieldset>

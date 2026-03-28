@@ -13,14 +13,14 @@ export const WalletItemPlainSchema = z.object({
 
 export const WalletItemCreateSchema = z.object({
   type: z.enum(['INCOME', 'EXPENSE']),
-  amount: z.number().min(1),
+  amount: z.number().min(1, 'Amount must be greater than 0'),
   note: z.string().optional(),
   date: z.date().optional().nullable(),
 })
 
 export const WalletItemUpdateSchema = z.object({
   type: z.enum(['INCOME', 'EXPENSE']).optional(),
-  amount: z.number().min(1).optional(),
+  amount: z.number().min(1, 'Amount must be greater than 0').optional(),
   note: z.string().optional(),
   date: z.coerce.date().optional(),
 })

@@ -19,12 +19,12 @@ export const useCreateWalletForm = () => {
   const form = ref<TWalletCreate>({
     name: '',
     balance: 0,
-    color: '#94ff76',
+    color: '',
   })
   const serverError = ref<string | null | undefined>(null)
 
   const reset = () => {
-    form.value = { name: '', balance: 0, color: '#94ff76' }
+    form.value = { name: '', balance: 0, color: '' }
     formErrors.value = null
   }
 
@@ -37,7 +37,7 @@ export const useCreateWalletForm = () => {
     },
     onError: (error) => {
       if (isAxiosError(error)) {
-        serverError.value = error.response?.data.error
+        serverError.value = error.response?.data.error || error.response?.data.message
       }
     },
   })

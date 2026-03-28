@@ -55,6 +55,9 @@
             </div>
             <p class="text-sm text-gray-500">Pick a color for your wallet</p>
           </div>
+          <p v-if="formErrors?.fieldErrors.color" class="text-error">
+            {{ formErrors.fieldErrors.color[0] }}
+          </p>
         </fieldset>
 
         <div class="modal-action">

@@ -14,12 +14,9 @@ export const WalletPlainSchema = z.object({
 export const WalletCreateSchema = z.object({
   balance: z.number().default(0),
   name: z.string().min(1, 'Name is required').max(30, 'Name must be at most 30 characters'),
-  color: z
-    .string()
-    .default('#f94144')
-    .refine((val) => WALLET_COLORS.includes(val), {
-      message: 'Color must be one of the allowed wallet colors',
-    }),
+  color: z.string().refine((val) => WALLET_COLORS.includes(val), {
+    message: 'Color must be one of the allowed wallet colors',
+  }),
 })
 
 export const WalletUpdateSchema = z.object({

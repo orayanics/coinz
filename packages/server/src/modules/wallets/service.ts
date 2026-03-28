@@ -30,6 +30,18 @@ export const updateWallet = async (
 ) => {
   const wallet = await checkWalletAccess(wallet_id, user_id);
 
+  if (data.name !== undefined) {
+    const existing = await db.wallet.findFirst({
+      where: {
+        user_id,
+        name: data.name,
+        NOT: { id: wallet_id },
+      },
+    });
+
+    if (existing) throw new Error("Wallet name must be unique");
+  }
+
   // Case: wallet balance is updated by user. It should recompute with the items already in
   // the wallet. It should not reset to the updated input of the user.
 

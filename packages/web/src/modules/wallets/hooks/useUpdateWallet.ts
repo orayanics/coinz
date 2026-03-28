@@ -46,7 +46,7 @@ export const useUpdateWalletForm = ({
     },
     onError: (error) => {
       if (isAxiosError(error)) {
-        serverError.value = error.response?.data.error
+        serverError.value = error.response?.data.error || error.response?.data.message
       }
     },
   })
