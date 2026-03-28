@@ -59,7 +59,6 @@ export const createWalletItemMutationOptions = (
     const parsed = ApiSuccess(WalletItemPlainSchema).parse(data)
 
     if (!parsed.data) {
-      console.log('Wallet payload missing from response')
       throw { success: false, error: 'Wallet payload missing from response' } as ApiErrorResponse
     }
 
@@ -76,7 +75,6 @@ export const updateWalletItemMutationOptions = (
     const parsed = ApiSuccess(WalletItemPlainSchema).parse(data)
 
     if (!parsed.data) {
-      console.log('Wallet payload missing from response')
       throw { success: false, error: 'Wallet payload missing from response' } as ApiErrorResponse
     }
 

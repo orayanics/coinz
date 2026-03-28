@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import axios from 'axios'
+import axios, { isAxiosError } from 'axios'
 
 export const useAuthStore = defineStore('auth', () => {
   const accessToken = ref<string | null>(null)
@@ -14,8 +14,13 @@ export const useAuthStore = defineStore('auth', () => {
       {},
       { withCredentials: true },
     )
-    setAccessToken(data.data.accessToken)
-    return data.data.accessToken
+
+    if (data.data?.accessToken) {
+      setAccessToken(data.data.accessToken)
+      return data.data.accessToken
+    }
+
+    return null
   }
 
   return { accessToken, setAccessToken, clearAccessToken, refresh }

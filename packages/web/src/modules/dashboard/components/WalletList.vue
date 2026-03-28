@@ -1,7 +1,7 @@
 <template>
   <div class="grid grid-rows-5 gap-2">
     <div
-      class="card px-4 border border-base-content/20 rounded-xl cursor-pointer transition-all duration-300 hover:shadow-md hover:-translate-y-1 hover:border-transparent group relative overflow-hidden"
+      class="bg-white card px-4 border border-base-content/20 rounded-xl cursor-pointer transition-all duration-300 hover:shadow-md hover:-translate-y-1 hover:border-transparent group relative overflow-hidden"
       v-for="wallet in items"
       :key="wallet.id"
       :style="{ '--wallet-color': wallet.color || '#e5e7eb' }"

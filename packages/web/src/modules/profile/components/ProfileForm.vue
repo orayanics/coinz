@@ -1,7 +1,14 @@
 <template>
-  <div class="card bg-base-100 p-4">
-    <p v-if="serverError" class="text-error mb-2">{{ serverError }}</p>
-    <form class="space-y-4" @submit.prevent="onFormSubmit">
+  <div class="card bg-slate-50 space-y-6">
+    <h1 class="text-2xl font-bold">Update Profile</h1>
+    <div v-if="serverError" class="relative z-10 alert alert-error shadow-lg">
+      {{ serverError }}
+    </div>
+
+    <form
+      class="space-y-4 relative w-full rounded-xl border border-dashed border-base-content/20 p-8 overflow-hidden group"
+      @submit.prevent="onFormSubmit"
+    >
       <fieldset class="fieldset">
         <label class="label">Name</label>
         <input
@@ -58,7 +65,7 @@
         </p>
       </fieldset>
 
-      <div class="flex justify-end">
+      <div class="flex justify-end mt-4">
         <button class="btn btn-primary" type="submit" :disabled="isPending">Save</button>
       </div>
     </form>

@@ -36,13 +36,10 @@
     <section class="mt-40 mb-32 max-w-6xl mx-auto px-6">
       <div class="text-center mb-16">
         <span
-          class="inline-block px-3 py-1 mb-4 text-xs font-bold uppercase tracking-wider text-slate-500 bg-slate-100 rounded-full border border-slate-200"
+          class="inline-block px-3 py-1 mb-4 text-md font-bold uppercase text-emerald-800 bg-white rounded-full border border-slate-200"
           >Our Features</span
         >
-        <h2 class="text-4xl md:text-5xl font-bold text-slate-900 leading-tight">
-          What users love <br />
-          about us
-        </h2>
+        <h2 class="text-4xl md:text-5xl font-bold text-slate-900 leading-tight">What we offer</h2>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -76,7 +73,7 @@
             <span class="font-bold text-xl">$876</span>
           </div>
           <div class="w-full mt-auto">
-            <h4 class="font-bold text-lg text-slate-900">Track your Expenses</h4>
+            <p class="font-bold text-lg text-slate-900">Track your Expenses</p>
             <p class="text-xs text-slate-500 mt-2 font-medium">
               Effortlessly track and manage your expenses with coinz.
             </p>
@@ -88,7 +85,7 @@
           class="bg-white rounded-3xl p-8 border border-slate-200/60 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] flex flex-col justify-end"
         >
           <div
-            class="w-full aspect-[1.58] bg-linear-to-tr from-emerald-600 to-emerald-400 rounded-xl p-5 text-white flex flex-col justify-between mb-8 shadow-lg shadow-emerald-500/20 transform -rotate-2"
+            class="w-full aspect-[1.58] bg-linear-to-tr from-emerald-600 to-emerald-400 rounded-xl p-5 text-white flex flex-col justify-between mb-8 shadow-lg shadow-emerald-500/20"
           >
             <div class="flex justify-between items-start">
               <svg class="w-8 h-8 opacity-70" viewBox="0 0 24 24" fill="currentColor">
@@ -104,13 +101,13 @@
               <div
                 class="flex justify-between text-[10px] font-medium opacity-80 uppercase tracking-wider"
               >
-                <span>John Carter</span>
+                <span>John Doe</span>
                 <span>02/30</span>
               </div>
             </div>
           </div>
           <div class="w-full mt-auto">
-            <h4 class="font-bold text-lg text-slate-900">Virtual Wallets</h4>
+            <p class="font-bold text-lg text-slate-900">Virtual Wallets</p>
             <p class="text-xs text-slate-500 mt-2 font-medium">
               Experience convenience and security with our virtual cards.
             </p>
@@ -123,33 +120,27 @@
         >
           <div class="space-y-4 mb-6 pt-4">
             <div>
-              <div class="flex justify-between text-xs font-bold text-slate-700 mb-2">
-                <span>New Laptop</span> <span class="text-emerald-500">80%</span>
+              <div class="flex justify-between text-xs font-bold text-slate-900 mb-2">
+                <span>New Laptop</span>
+                <span class="text-emerald-800 drop-shadow drop-shadow-emerald-200">80%</span>
               </div>
               <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
                 <div class="w-[80%] h-full bg-emerald-500 rounded-full"></div>
               </div>
             </div>
             <div
-              class="bg-slate-50 border border-slate-100 p-3 rounded-xl flex items-center justify-between mt-4"
+              class="bg-slate-50 border border-slate-200 p-3 rounded-xl flex items-center justify-between mt-4"
             >
-              <span class="text-xs font-medium text-slate-600">Save $200</span>
+              <span class="text-xs font-medium text-slate-900">Save $200</span>
               <div
-                class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-500 flex items-center justify-center border border-emerald-200"
+                class="rounded-full p-1 bg-emerald-100 flex items-center justify-center border border-emerald-500"
               >
-                <svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="3"
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
+                <PhCheck size="12" class="text-primary" weight="bold" />
               </div>
             </div>
           </div>
           <div class="w-full mt-auto">
-            <h4 class="font-bold text-lg text-slate-900">Smash your goals</h4>
+            <p class="font-bold text-lg text-slate-900">Smash your goals</p>
             <p class="text-xs text-slate-500 mt-2 font-medium">
               Empower yourself to achieve financial success effortlessly.
             </p>
@@ -161,7 +152,7 @@
 </template>
 
 <script setup lang="ts">
-import { PhCaretRight, PhCoins } from '@phosphor-icons/vue'
+import { PhCaretRight, PhCoins, PhCheck } from '@phosphor-icons/vue'
 </script>
 
 <style scoped></style>

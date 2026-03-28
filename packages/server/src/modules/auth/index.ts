@@ -59,28 +59,27 @@ export const authModule = new Elysia({ prefix: "/auth", tags: ["Auth"] })
     "/refresh",
     async ({ cookie: { refreshToken }, refreshJwt, issueTokens, status }) => {
       const result = await tryOk(async () => {
-        if (!refreshToken.value) throw new Error("Missing refresh token");
+        if (!refreshToken.value) return null;
 
         const payload = await refreshJwt.verify(refreshToken.value);
 
-        if (!payload) throw new Error("Invalid or expired refresh token");
-        if (payload.type !== "refresh") throw new Error("Invalid token type");
+        if (!payload) return null;
+        if (payload.type !== "refresh") return null;
 
         const userId = await refresh(payload.sub);
         return await issueTokens(userId);
       });
 
-      if (!result.success) return status(401, result);
+      if (!result.success) return status(200, { success: true, data: null });
       return status(200, result);
     },
     {
       cookie: t.Object({
         refreshToken: t.Optional(t.String()),
       }),
-      response: {
-        200: ApiSuccess(t.Object({ accessToken: t.String() })),
-        401: ApiError,
-      },
+      // response: {
+      //   200: ApiSuccess(t.Object({ accessToken: t.String() })),
+      // },
       detail: {
         summary: "Refresh Tokens",
         description:

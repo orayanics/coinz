@@ -1,17 +1,17 @@
 <template>
-  <div class="grid grid-cols-4 gap-4 p-4">
+  <div class="grid grid-cols-4 gap-6 p-4 bg-slate-50">
     <!-- User Details -->
     <div class="col-span-1 flex flex-col gap-2">
       <StateLoading v-if="isLoading" />
       <StateError v-else-if="isError" />
       <StateNull v-else-if="!data" />
-      <div v-else class="bg-base-100">
+      <div v-else>
         <p class="font-semibold text-lg">{{ data.name }}</p>
         <p class="text-sm text-base-content/70">{{ data.email }}</p>
       </div>
 
-      <button class="btn" @click="showForm = true">Update Profile</button>
-      <button class="btn btn-ghost" @click="onCancel">Cancel</button>
+      <button class="btn btn-primary" @click="showForm = true">Update Profile</button>
+      <button class="btn btn-secondary border" @click="onCancel">Cancel</button>
     </div>
 
     <!-- Forms -->

@@ -10,11 +10,7 @@ const app = createApp(App)
 app.use(createPinia())
 
 const auth = useAuthStore()
-try {
-  await auth.refresh()
-} catch {
-  // no valid session, continue as guest
-}
+await auth.refresh()
 
 app.use(VueQueryPlugin, {
   queryClientConfig: {
