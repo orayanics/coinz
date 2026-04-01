@@ -2,6 +2,8 @@ import { Elysia, status } from "elysia";
 import { cookie } from "@elysiajs/cookie";
 import { openapi } from "@elysiajs/openapi";
 import { cors } from "@elysiajs/cors";
+import { rateLimit } from "elysia-rate-limit";
+
 import { authModule } from "./modules/auth";
 import { walletsModule } from "./modules/wallets";
 import { walletItemsModule } from "./modules/wallet_items";
@@ -58,6 +60,19 @@ const app = new Elysia()
   .get("/", () => "Hello Elysia")
 
   .use(authModule)
+  .use(
+    rateLimit({
+      max: 100,
+      duration: 60 * 1000, // 1 minute
+      errorResponse: new Response("rate-limited", {
+        status: 429,
+        headers: new Headers({
+          "Content-Type": "text/plain",
+          "Custom-Header": "custom",
+        }),
+      }),
+    }),
+  )
   .use(walletsModule)
   .use(walletItemsModule)
   .use(dashboardModule)

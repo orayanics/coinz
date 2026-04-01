@@ -5,9 +5,23 @@ import { UserLogin, UserRegister, UserUpdate } from "@/modules/auth/model";
 
 import { register, refresh, login, updateProfile, getUser } from "./service";
 import { jwtPlugin } from "@/plugins/jwt";
+import { rateLimit } from "elysia-rate-limit";
 
 export const authModule = new Elysia({ prefix: "/auth", tags: ["Auth"] })
   .use(jwtPlugin)
+  .use(
+    rateLimit({
+      max: 5,
+      duration: 60 * 1000, // 1 minute
+      errorResponse: new Response("rate-limited", {
+        status: 429,
+        headers: new Headers({
+          "Content-Type": "text/plain",
+          "Custom-Header": "custom",
+        }),
+      }),
+    }),
+  )
   .post(
     "/register",
     async ({ body }) => {
