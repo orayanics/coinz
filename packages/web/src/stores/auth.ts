@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import axios, { isAxiosError } from 'axios'
+import axios from 'axios'
 
 export const useAuthStore = defineStore('auth', () => {
   const accessToken = ref<string | null>(null)

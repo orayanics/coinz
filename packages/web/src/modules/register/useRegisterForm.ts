@@ -20,7 +20,7 @@ export const useRegisterForm = () => {
 
   const { mutate: register, isPending } = useRegister()
 
-  const onFormSubmit = (event: Event) => {
+  const onFormSubmit = (_event: Event) => {
     const isValid = RegisterPlain.safeParse(form.value)
 
     if (!isValid.success) {
