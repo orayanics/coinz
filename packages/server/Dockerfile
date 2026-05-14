@@ -15,6 +15,8 @@ WORKDIR /app/packages/server
 
 ENV NODE_ENV=production
 
+RUN bunx --bun prisma generate
+
 RUN bun run build
 
 FROM gcr.io/distroless/base
