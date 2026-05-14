@@ -9,6 +9,9 @@ import { walletsModule } from "./modules/wallets";
 import { walletItemsModule } from "./modules/wallet_items";
 import { dashboardModule } from "./modules/dashboard";
 
+const port = Number.parseInt(process.env.PORT ?? "", 10);
+const resolvedPort = Number.isFinite(port) ? port : 3000;
+
 const app = new Elysia()
   .use(
     cors({
@@ -76,7 +79,7 @@ const app = new Elysia()
   .use(walletsModule)
   .use(walletItemsModule)
   .use(dashboardModule)
-  .listen(3000);
+  .listen(resolvedPort);
 
 console.log(
   `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`,

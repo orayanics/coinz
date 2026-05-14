@@ -2,8 +2,10 @@
   "name": "coinz-server",
   "version": "1.0.50",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "bun run --watch src/index.ts"
+    "dev": "bun run --watch src/index.ts",
+    "lint": "eslint .",
+    "test": "bun test",
+    "build": "bun build --compile --minify-whitespace --minify-syntax --target bun --outfile server src/index.ts"
   },
   "dependencies": {
     "@elysiajs/cookie": "^0.8.0",
@@ -18,8 +20,12 @@
   },
   "devDependencies": {
     "@types/node": "^25.5.0",
+    "@typescript-eslint/eslint-plugin": "^8.46.1",
+    "@typescript-eslint/parser": "^8.46.1",
     "bun-types": "latest",
-    "prisma": "^7.5.0"
+    "eslint": "^9.32.0",
+    "prisma": "^7.5.0",
+    "typescript": "~5.9.3"
   },
   "module": "src/index.js"
 }

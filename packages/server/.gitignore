@@ -44,3 +44,6 @@ package-lock.json
 
 # db prisma
 dev.db
+
+# server build
+server
