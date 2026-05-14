@@ -9,64 +9,67 @@ import { rateLimit } from "elysia-rate-limit";
 
 export const authModule = new Elysia({ prefix: "/auth", tags: ["Auth"] })
   .use(jwtPlugin)
-  .use(
-    rateLimit({
-      max: 5,
-      duration: 60 * 1000, // 1 minute
-      errorResponse: new Response("rate-limited", {
-        status: 429,
-        headers: new Headers({
-          "Content-Type": "text/plain",
-          "Custom-Header": "custom",
-        }),
-      }),
-    }),
-  )
-  .post(
-    "/register",
-    async ({ body }) => {
-      const result = await tryOk(() => register(body));
-
-      if (!result.success) return status(400, result);
-      return status(201, ok(undefined));
-    },
-    {
-      body: UserRegister,
-      response: {
-        201: ApiSuccess(),
-        400: ApiError,
-      },
-      detail: {
-        summary: "Register",
-        description: "Creates a new user",
-      },
-    },
-  )
-  .post(
-    "/login",
-    async ({ body, issueTokens }) => {
-      const result = await tryOk(() => login(body));
-
-      if (!result.success) return status(400, result);
-
-      const { accessToken } = await issueTokens(result.data.id);
-      return status(200, ok({ accessToken }));
-    },
-    {
-      body: UserLogin,
-      response: {
-        200: ApiSuccess(
-          t.Object({
-            accessToken: t.String(),
+  .group("", (app) =>
+    app
+      .use(
+        rateLimit({
+          max: 5,
+          duration: 60 * 1000, // 1 minute
+          errorResponse: new Response("rate-limited", {
+            status: 429,
+            headers: new Headers({
+              "Content-Type": "text/plain",
+              "Custom-Header": "custom",
+            }),
           }),
-        ),
-        400: ApiError,
-      },
-      detail: {
-        summary: "Login",
-        description: "Returns user with access and refresh tokens",
-      },
-    },
+        }),
+      )
+      .post(
+        "/register",
+        async ({ body }) => {
+          const result = await tryOk(() => register(body));
+
+          if (!result.success) return status(400, result);
+          return status(201, ok(undefined));
+        },
+        {
+          body: UserRegister,
+          response: {
+            201: ApiSuccess(),
+            400: ApiError,
+          },
+          detail: {
+            summary: "Register",
+            description: "Creates a new user",
+          },
+        },
+      )
+      .post(
+        "/login",
+        async ({ body, issueTokens }) => {
+          const result = await tryOk(() => login(body));
+
+          if (!result.success) return status(400, result);
+
+          const { accessToken } = await issueTokens(result.data.id);
+          return status(200, ok({ accessToken }));
+        },
+        {
+          body: UserLogin,
+          response: {
+            200: ApiSuccess(
+              t.Object({
+                accessToken: t.String(),
+              }),
+            ),
+            400: ApiError,
+          },
+          detail: {
+            summary: "Login",
+            description: "Returns user with access and refresh tokens",
+          },
+        },
+      ),
   )
 
   .post(
