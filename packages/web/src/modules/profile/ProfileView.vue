@@ -10,8 +10,10 @@
         <p class="text-sm text-base-content/70">{{ data.email }}</p>
       </div>
 
-      <button class="btn btn-primary" @click="showForm = true">Update Profile</button>
-      <button class="btn btn-secondary border" @click="onCancel">Cancel</button>
+      <button name="updateProfile" class="btn btn-primary" @click="showForm = true">
+        Update Profile
+      </button>
+      <RouterLink to="/dashboard" class="btn btn-secondary border">Cancel</RouterLink>
     </div>
 
     <!-- Forms -->
@@ -23,20 +25,14 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { useRouter } from 'vue-router'
 import { useQuery } from '@tanstack/vue-query'
 import { useUserQuery } from '@/api/useAuth'
 import ProfileForm from './components/ProfileForm.vue'
 import { StateError, StateLoading, StateNull } from '@/components/States'
 
-const router = useRouter()
 const showForm = ref(false)
 
 const { data, isLoading, isError } = useQuery(computed(() => useUserQuery()))
-
-function onCancel() {
-  router.push('/dashboard')
-}
 </script>
 
 <style scoped></style>

@@ -7,7 +7,7 @@ export const RegisterPlain = z
       .min(2, 'Name must be at least 2 characters')
       .max(60)
       .regex(/^[a-zA-Z\s]+$/, 'Name can only contain letters and spaces'),
-    email: z.email(),
+    email: z.email('Invalid email address'),
     password: z
       .string()
       .min(8, 'Password must be at least 8 characters')
