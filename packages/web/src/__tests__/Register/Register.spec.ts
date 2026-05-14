@@ -101,9 +101,7 @@ describe('RegisterView', () => {
       .findAllComponents(RouterLinkStub)
       .find((link) => link.text() === 'Access your wallets')
     expect(loginLInk).toBeTruthy()
-    if (loginLInk) {
-      await loginLInk.trigger('click')
-      expect(loginLInk.props('to')).toBe('/login')
-    }
+    await loginLInk!.trigger('click')
+    expect(loginLInk!.props('to')).toBe('/login')
   })
 })

@@ -1,8 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount, RouterLinkStub } from '@vue/test-utils'
 import { VueQueryPlugin, QueryClient } from '@tanstack/vue-query'
-import { createMemoryHistory, createRouter } from 'vue-router'
-import { defineComponent, ref, nextTick } from 'vue'
+import { ref, nextTick } from 'vue'
 
 import * as z from 'zod'
 import { ProfileUpdateSchema } from '@/modules/profile/schema'

@@ -100,9 +100,7 @@ describe('LoginView', () => {
       .findAllComponents(RouterLinkStub)
       .find((link) => link.text() === 'Setup a wallet')
     expect(registerLink).toBeTruthy()
-    if (registerLink) {
-      await registerLink.trigger('click')
-      expect(registerLink.props('to')).toBe('/register')
-    }
+    await registerLink!.trigger('click')
+    expect(registerLink!.props('to')).toBe('/register')
   })
 })
