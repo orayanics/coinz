@@ -1,5 +1,5 @@
 import { PrismaLibSql } from "@prisma/adapter-libsql";
-import { PrismaClient } from "src/generated/prisma/client";
+import { PrismaClient } from "../generated/prisma/client";
 
 const DB_URL = process.env.DATABASE_URL;
 if (!DB_URL)
