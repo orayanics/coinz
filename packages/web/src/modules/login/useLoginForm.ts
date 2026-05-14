@@ -16,7 +16,7 @@ export const useLoginForm = () => {
 
   const { mutate: login, isPending } = useLogin()
 
-  const onFormSubmit = (event: Event) => {
+  const onFormSubmit = (_event: Event) => {
     const isValid = LoginPlain.safeParse(form.value)
 
     if (!isValid.success) {
