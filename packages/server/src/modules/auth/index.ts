@@ -6,6 +6,7 @@ import { UserLogin, UserRegister, UserUpdate } from "@/modules/auth/model";
 import { register, refresh, login, updateProfile, getUser } from "./service";
 import { jwtPlugin } from "@/plugins/jwt";
 import { rateLimit } from "elysia-rate-limit";
+import { isProd } from "@/index";
 
 export const authModule = new Elysia({ prefix: "/auth", tags: ["Auth"] })
   .use(jwtPlugin)
@@ -13,7 +14,7 @@ export const authModule = new Elysia({ prefix: "/auth", tags: ["Auth"] })
     app
       .use(
         rateLimit({
-          max: 5,
+          max: isProd ? 10 : 1000,
           duration: 60 * 1000, // 1 minute
           errorResponse: new Response("rate-limited", {
             status: 429,

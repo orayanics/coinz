@@ -3,7 +3,10 @@ const tsParser = require("@typescript-eslint/parser");
 
 module.exports = [
   {
-    ignores: ["dist/**", "node_modules/**", "src/generated/**"]
+    ignores: ["dist/**", "node_modules/**", "src/generated/**"],
+  },
+  {
+    include: ["src/**/*.ts", "src/**/*.tsx"],
   },
   {
     files: ["**/*.ts"],
@@ -12,12 +15,12 @@ module.exports = [
       parserOptions: {
         ecmaVersion: 2022,
         sourceType: "module",
-        project: "./tsconfig.json"
-      }
+        project: "./tsconfig.json",
+      },
     },
     plugins: {
-      "@typescript-eslint": tseslint
+      "@typescript-eslint": tseslint,
     },
-    rules: {}
-  }
+    rules: {},
+  },
 ];
