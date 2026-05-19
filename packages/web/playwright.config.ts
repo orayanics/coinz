@@ -41,6 +41,10 @@ export default defineConfig({
 
     /* Only on CI systems run the tests headless */
     headless: !!process.env.CI,
+    // video: {
+    //   mode: 'on',
+    //   size: { width: 1280, height: 720 },
+    // },
   },
 
   /* Configure projects for major browsers */

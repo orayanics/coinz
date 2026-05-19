@@ -15,7 +15,7 @@
       </div>
 
       <!-- Server Error -->
-      <div v-if="serverError" class="relative z-10 alert alert-error shadow-lg">
+      <div v-if="serverError" class="relative z-10 alert alert-error shadow-lg" role="alert">
         {{ serverError }}
       </div>
 
@@ -61,6 +61,7 @@
           <div
             v-if="formErrors?.fieldErrors.email"
             class="mt-2 ml-1 flex items-center gap-1.5 bg-red-500/80 backdrop-blur-sm px-2.5 py-1 rounded w-fit border border-red-400/50"
+            data-test="error-email"
           >
             <PhWarning size="14" weight="bold" class="text-white" />
             <p class="text-[11px] text-white font-bold tracking-wide">
@@ -85,6 +86,7 @@
           <div
             v-if="formErrors?.fieldErrors.password"
             class="mt-2 ml-1 flex items-center gap-1.5 bg-red-500/80 backdrop-blur-sm px-2.5 py-1 rounded w-fit border border-red-400/50"
+            data-test="error-password"
           >
             <PhWarning size="14" weight="bold" class="text-white" />
             <p class="text-[11px] text-white font-bold tracking-wide">
