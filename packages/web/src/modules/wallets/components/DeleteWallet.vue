@@ -1,5 +1,5 @@
 <template>
-  <dialog ref="dialogRef" class="modal" @close="close">
+  <dialog ref="dialogRef" class="modal" aria-label="Delete Wallet" @close="close">
     <div class="modal-box">
       <h3 class="font-bold text-lg mb-4">Delete Wallet</h3>
 
