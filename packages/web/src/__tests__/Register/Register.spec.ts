@@ -42,7 +42,7 @@ describe('RegisterView', () => {
 
   it('renders register page content', () => {
     expect(RegisterView).toBeTruthy()
-    expect(wrapper.text()).toContain('Access your digital wallet')
+    expect(wrapper.text()).toContain('Get started with your digital wallet')
     expect(wrapper.text()).toContain('Register')
     expect(wrapper.text()).toContain('coinz')
   })
