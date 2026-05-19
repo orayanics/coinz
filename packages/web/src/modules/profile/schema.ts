@@ -2,7 +2,11 @@ import { z } from 'zod'
 
 export const ProfileUpdateSchema = z
   .object({
-    name: z.string().min(1, 'Name is required').optional(),
+    name: z
+      .string()
+      .min(1, 'Name is required')
+      .regex(/^[a-zA-Z\s]+$/, 'Name can only contain letters and spaces')
+      .optional(),
     old_password: z.string().optional(),
     new_password: z
       .string()

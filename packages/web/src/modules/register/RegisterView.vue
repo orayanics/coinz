@@ -11,11 +11,11 @@
           <div class="w-6 h-6 bg-emerald-500 rounded-md"></div>
           coinz
         </RouterLink>
-        <p class="text-base-content/60 font-medium text-sm">Access your digital wallet</p>
+        <p class="text-base-content/60 font-medium text-sm">Get started with your digital wallet</p>
       </div>
 
       <!-- Server Error -->
-      <div v-if="serverError" class="relative z-10 alert alert-error shadow-lg">
+      <div v-if="serverError" class="relative z-10 alert alert-error shadow-lg" role="alert">
         {{ serverError }}
       </div>
 
@@ -46,7 +46,7 @@
 
         <fieldset class="fieldset gap-0 mb-4">
           <label
-            for="email"
+            for="name"
             class="text-xs font-bold uppercase tracking-widest text-white drop-shadow-sm"
             >Account Name</label
           >
@@ -78,7 +78,6 @@
           <input
             id="email"
             v-model="form.email"
-            type="email"
             autocomplete="email"
             placeholder="email@example.com"
             class="font-mono w-full input border-0 border-b bg-transparent rounded-none px-1 py-1.5 text-white focus:outline-none focus:ring-0 focus:border-white transition-colors"

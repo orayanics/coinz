@@ -11,6 +11,7 @@ export const useProfileForm = () => {
   const queryClient = useQueryClient()
   const formErrors = ref<z.core.$ZodFlattenedError<ProfileSchema> | null>(null)
   const serverError = ref<string | null>(null)
+  const serverSuccess = ref<string | null>(null)
   const form = ref({
     name: '',
     old_password: '',
@@ -41,6 +42,7 @@ export const useProfileForm = () => {
       onSuccess: async () => {
         await queryClient.invalidateQueries({ queryKey: ['user'] })
         form.value = { name: '', old_password: '', new_password: '', confirm_password: '' }
+        serverSuccess.value = 'Profile updated successfully'
       },
       onError: (error) => {
         if (isAxiosError(error)) {
@@ -54,6 +56,7 @@ export const useProfileForm = () => {
     form,
     onFormSubmit,
     serverError,
+    serverSuccess,
     isPending,
     formErrors,
   }

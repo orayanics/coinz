@@ -8,9 +8,10 @@ import { authModule } from "./modules/auth";
 import { walletsModule } from "./modules/wallets";
 import { walletItemsModule } from "./modules/wallet_items";
 import { dashboardModule } from "./modules/dashboard";
+import { isProd } from "./lib/constants";
 
-const port = Number.parseInt(process.env.PORT ?? "", 10);
-const resolvedPort = Number.isFinite(port) ? port : 3000;
+export const port = Number.parseInt(process.env.PORT ?? "", 10);
+export const resolvedPort = Number.isFinite(port) ? port : 3000;
 
 const app = new Elysia()
   .use(
@@ -45,12 +46,13 @@ const app = new Elysia()
       });
     }
 
-    if (code === "NOT_FOUND") {
-      return status(404, {
-        success: false as const,
-        message: "Resource not found",
-      });
-    }
+    // Commented out: no route is returning 404
+    // if (code === "NOT_FOUND") {
+    //   return status(404, {
+    //     success: false as const,
+    //     message: "Resource not found",
+    //   });
+    // }
 
     if (code === "INTERNAL_SERVER_ERROR") {
       return status(500, {
@@ -65,7 +67,7 @@ const app = new Elysia()
   .use(authModule)
   .use(
     rateLimit({
-      max: 100,
+      max: isProd ? 100 : 1000,
       duration: 60 * 1000, // 1 minute
       errorResponse: new Response("rate-limited", {
         status: 429,
