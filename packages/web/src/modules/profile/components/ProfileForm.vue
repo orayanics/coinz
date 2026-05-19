@@ -1,8 +1,20 @@
 <template>
   <div class="card bg-slate-50 space-y-6">
     <h1 class="text-2xl font-bold">Update Profile</h1>
-    <div v-if="serverError" class="error-server relative z-10 alert alert-error shadow-lg">
+    <div
+      v-if="serverError"
+      class="error-server relative z-10 alert alert-error shadow-lg"
+      role="alert"
+    >
       {{ serverError }}
+    </div>
+
+    <div
+      v-if="serverSuccess"
+      class="success-server relative z-10 alert alert-success shadow-lg"
+      role="alert"
+    >
+      {{ serverSuccess }}
     </div>
 
     <form
@@ -10,8 +22,9 @@
       @submit.prevent="onFormSubmit"
     >
       <fieldset class="fieldset">
-        <label class="label form-name">Name</label>
+        <label for="name" class="label form-name">Name</label>
         <input
+          id="name"
           class="input w-full"
           v-model="form.name"
           type="text"
@@ -24,8 +37,9 @@
       </fieldset>
 
       <fieldset class="fieldset">
-        <label class="label form-oldpass">Old Password</label>
+        <label for="old_password" class="label form-oldpass">Old Password</label>
         <input
+          id="old_password"
           class="input w-full"
           v-model="form.old_password"
           type="password"
@@ -38,8 +52,9 @@
       </fieldset>
 
       <fieldset class="fieldset">
-        <label class="label form-newpass">New Password</label>
+        <label for="new_password" class="label form-newpass">New Password</label>
         <input
+          id="new_password"
           class="input w-full"
           v-model="form.new_password"
           type="password"
@@ -52,13 +67,14 @@
       </fieldset>
 
       <fieldset class="fieldset">
-        <label class="label form-confpass">Confirm New Password</label>
+        <label for="confirm_password" class="label form-confpass">Confirm New Password</label>
         <input
+          id="confirm_password"
           class="input w-full"
           v-model="form.confirm_password"
           type="password"
           placeholder="********"
-          autocomplete="new-password"
+          autocomplete="confirm-password"
         />
         <p
           v-if="formErrors?.fieldErrors.confirm_password"
@@ -78,7 +94,7 @@
 <script setup lang="ts">
 import useProfileForm from '../hooks/useProfileForm'
 
-const { form, onFormSubmit, serverError, isPending, formErrors } = useProfileForm()
+const { form, onFormSubmit, serverError, serverSuccess, isPending, formErrors } = useProfileForm()
 
 defineExpose({ submit: onFormSubmit })
 </script>

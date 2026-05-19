@@ -46,7 +46,7 @@ export const updateProfile = async (user_id: string, data: TUserUpdate) => {
   const user = await db.user.findUnique({ where: { id: user_id } });
   if (!user) throw new Error("User not found");
 
-  const updateData: TUserUpdate = {};
+  const updateData: { name?: string; password?: string } = {};
 
   if (data.name !== undefined) {
     updateData.name = data.name;
@@ -72,7 +72,7 @@ export const updateProfile = async (user_id: string, data: TUserUpdate) => {
       );
     }
 
-    updateData.new_password = await Bun.password.hash(data.new_password);
+    updateData.password = await Bun.password.hash(data.new_password);
   }
 
   if (Object.keys(updateData).length === 0) {
