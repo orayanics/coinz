@@ -14,13 +14,6 @@ const VALID_ACCOUNT = {
 const NEW_NAME = 'New Name'
 const INVALID_NAME = '123InvalidName!@#'
 
-const PASSWORDS = {
-  old_valid: 'Admin123!',
-  new_valid: 'Admin1234!',
-  new_invalid: 'weakpass',
-  conf_mismatch: 'Mismatch123!',
-}
-
 // Login before each test
 // Redirect to profile page then click Update Profile button before each test
 test.beforeEach(async ({ page }) => {
