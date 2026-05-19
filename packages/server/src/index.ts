@@ -8,11 +8,10 @@ import { authModule } from "./modules/auth";
 import { walletsModule } from "./modules/wallets";
 import { walletItemsModule } from "./modules/wallet_items";
 import { dashboardModule } from "./modules/dashboard";
+import { isProd } from "./lib/constants";
 
 export const port = Number.parseInt(process.env.PORT ?? "", 10);
 export const resolvedPort = Number.isFinite(port) ? port : 3000;
-export const isProd =
-  process.env.NODE_ENV === ("production" as "development" | "production");
 
 const app = new Elysia()
   .use(

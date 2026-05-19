@@ -6,7 +6,7 @@ import { UserLogin, UserRegister, UserUpdate } from "@/modules/auth/model";
 import { register, refresh, login, updateProfile, getUser } from "./service";
 import { jwtPlugin } from "@/plugins/jwt";
 import { rateLimit } from "elysia-rate-limit";
-import { isProd } from "@/index";
+import { isProd } from "@/lib/constants";
 
 export const authModule = new Elysia({ prefix: "/auth", tags: ["Auth"] })
   .use(jwtPlugin)
